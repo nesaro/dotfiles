@@ -106,7 +106,7 @@ main = do sp <- mkSpawner
                      { borderWidth        = 2
                      , normalBorderColor  = "grey30"
                      , focusedBorderColor = "#ff0000" 
-                     , workspaces         = ["nav.1", "adm.2", "agenda", "chat", "colony", "downloads", "mail", "mus", "natural",  "social", "tr", "tv"] 
+                     , workspaces         = ["nav", "adm", "agenda", "chat", "colony", "downloads", "mail", "mus", "natural",  "social", "tr", "tv"] 
                      , terminal           = "myterm"
                      --, logHook            = do dynamicLogWithPP $ robPP din
                      --                          myLogHook
@@ -160,7 +160,7 @@ ladm =  spacing 3 (MosaicAlt M.empty) ||| tiled ||| Roledex ||| Mirror tiled |||
      delta2   = 3/100
      ratio2   = 60/100
 
-myLayout = avoidStruts $ smartBorders(onWorkspace "chat" lchat $ onWorkspace "adm.2" ladm lall)
+myLayout = avoidStruts $ smartBorders(onWorkspace "chat" lchat $ onWorkspace "adm" ladm lall)
 
 toAdd x sp =
     --TAGS
@@ -250,8 +250,8 @@ toAdd x sp =
             , ((modWinMask, xK_w),    spawn "uzbl-browser wikipedia.org")
             ])
     , ((modMask x , xK_q), spawn("killall dzen2") >> restart "xmonad" True)
-    , ((modWinMask , xK_2), windows $W.greedyView("adm.2"))
-    , ((modWinMask , xK_1), windows $ W.greedyView("nav.1"))
+    , ((modWinMask , xK_2), windows $W.greedyView("adm"))
+    , ((modWinMask , xK_1), windows $ W.greedyView("nav"))
     , ((modWinMask .|. shiftMask, xK_b), spawn "xscreensaver-command --lock") --Bloquea el escritorio
     , ((modWinMask .|. shiftMask, xK_s), spawn "xterm -bg black -fg white")
     , ((modWinMask .|. shiftMask, xK_d), spawn "gnome-terminal --profile=coding")
@@ -291,7 +291,7 @@ myManageHook2 = composeAll
     className   =? "Claws-mail"           --> doF(W.shift "mail" ),
     className   =? "claws-mail"           --> doF(W.shift "mail" ),
     className   =? "Korganizer"           --> doF(W.shift "agenda" ),
-    className   =? "Download"           --> doF(W.shift "download" ),
+    title   =? "Downloads"           --> doF(W.shift "downloads" ),
     className   =? "zim"           --> doF(W.shift "agenda" ),
     --className   =? "sylpheed"           --> doF(withFocused (addTag "mail")), -- Pendiente, doF espera un Winset
     title       =? "MPlayer"            --> doFloat,
