@@ -168,7 +168,7 @@ toAdd x sp =
     --, ((modWinMask , xK_g  ), tagPrompt defaultXPConfig (\s -> withTaggedP s (W.shiftWin "2"))) -- ni idea
     [((modWinMask, xK_t), SM.submap . M.fromList $ 
                 [ ((modWinMask, xK_t), tagPrompt defaultXPConfig (\s -> focusUpTaggedGlobal s ))-- Enfoca a la siguiente ventana
-                , ((modWinMask .|. shiftMask, xK_t), tagPrompt defaultXPConfig (\s -> withFocused (addTag s)))
+                , ((modWinMask, xK_s), tagPrompt defaultXPConfig (\s -> withFocused (addTag s)))
                 , ((modWinMask, xK_d  ), tagDelPrompt defaultXPConfig) -- Borra el tag de la ventana
                 , ((modWinMask, xK_g  ), tagPrompt defaultXPConfig (\s -> withTaggedGlobalP s shiftHere)) -- Cambia las ventanas con el tag al escritorio actual
 
