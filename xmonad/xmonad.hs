@@ -50,10 +50,11 @@ import XMonad.Actions.TopicSpace
 import XMonad.Actions.GridSelect
 import XMonad.Layout.BorderResize
 import XMonad.Layout.Magnifier
-import XMonad.Layout.DecorationMadness
 import XMonad.Util.Replace
 import XMonad.Actions.WindowGo
+import XMonad.Layout.SimpleDecoration
 
+import XMonad.Util.Loggers
 
 
 import qualified XMonad.Prompt         as P
@@ -82,6 +83,7 @@ import System.IO
 -- Necesario para los keybindings:
 import qualified XMonad.StackSet as W 
 
+import Data.Traversable (traverse)
 -- Fool java
 import XMonad.Hooks.SetWMName
 
@@ -95,6 +97,9 @@ modWinMask = mod4Mask
  -- at the end of the list if you want hot-restarting
  -- to work.
 
+
+logTag :: Logger
+logTag = withWindowSet $ traverse (fmap show . getTags) . W.peek
 
 
 --statusBarCmd= "dzen2 -bg '#2c2c32' -fg 'grey70' -w 620 -sa c -fn '-*-profont-*-*-*-*-11-*-*-*-*-*-iso8859' -e '' -xs 1 -ta l"
@@ -113,6 +118,7 @@ main = do sp <- mkSpawner
                      , logHook            = dynamicLogWithPP $ xmobarPP
                                                 { ppOutput = hPutStrLn xmproc
                                                 , ppTitle = xmobarColor "green" "" . shorten 50
+                                                , ppExtras = [logTag]
                                                 }
                      , manageHook         = manageSpawn sp <+> myManageHook2 <+> myManageHook3 <+> manageDocks <+> manageHook defaultConfig -- El ultimo termino viene del modulo de area de paneles
                      , keys               = newKeys sp
