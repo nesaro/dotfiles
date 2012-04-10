@@ -116,9 +116,7 @@ main = do sp <- mkSpawner
                                                 }
                      , manageHook         = manageSpawn sp <+> myManageHook2 <+> myManageHook3 <+> manageDocks <+> manageHook defaultConfig -- El ultimo termino viene del modulo de area de paneles
                      , keys               = newKeys sp
-                     --, layoutHook         = showWName $ ewmhDesktopsLayout $ myLayout
-                     -- , layoutHook         = ewmhDesktopsLayout $ myLayout
-                     , layoutHook         = showWName myLayout
+                     , layoutHook         = myLayout
                      , startupHook        = setWMName "LG3D"
                      , focusFollowsMouse  = False
                      }
