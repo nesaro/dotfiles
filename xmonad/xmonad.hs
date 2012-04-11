@@ -185,6 +185,8 @@ toAdd x sp =
                 [ ((modWinMask, xK_w     ), windowPromptGoto defaultXPConfig)
                 , ((modWinMask, xK_i     ), windowPromptBring defaultXPConfig)
                 , ((modWinMask, xK_e), goToSelected defaultGSConfig)
+                , ((modWinMask, xK_c), withWorkspace defaultXPConfig (windows . copy))
+                , ((modWinMask, xK_i), withWorkspace defaultXPConfig (windows . W.shift))
 
                 ])
 
@@ -192,8 +194,6 @@ toAdd x sp =
     , ((modWinMask, xK_e), SM.submap . M.fromList $ 
                 [ ((modWinMask, xK_d), removeWorkspace)
                 , ((modWinMask, xK_e), selectWorkspace defaultXPConfig)
-                , ((modWinMask, xK_i), withWorkspace defaultXPConfig (windows . W.shift))
-                , ((modWinMask, xK_c), withWorkspace defaultXPConfig (windows . copy))
                 , ((modWinMask, xK_r), renameWorkspace defaultXPConfig)
                 ])
 
@@ -265,7 +265,8 @@ toAdd x sp =
     , ((modMask x, xK_BackSpace), focusUrgent) -- Ultima ventana urgente. TODO: Pensar algo mejor para las ventanas blink, tipo añadir tag
     , ((modWinMask, xK_b), sendMessage ToggleStruts) -- Toggle area de paneles
     , ((modWinMask .|. shiftMask, xK_m), sshPrompt defaultXPConfig) -- Toggle area de paneles
-    , ((modMask x, xK_F4), kill)
+    , ((modMask x, xK_F4), kill1)
+    , ((modMask x .|. shiftMask , xK_F4), kill1)
 
     --SEARCH ENGINES
     , ((modWinMask, xK_s), SM.submap $ searchEngineMap $ S.promptSearch P.defaultXPConfig)
