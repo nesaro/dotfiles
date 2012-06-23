@@ -253,6 +253,8 @@ toAdd x =
             , ((modWinMask, xK_w),    spawn "uzbl-browser wikipedia.org")
             ])
     , ((modMask x , xK_q), spawn("killall dzen2") >> restart "xmonad" True)
+    , ((modWinMask , xK_4), windows $W.greedyView("chat"))
+    , ((modWinMask , xK_3), windows $W.greedyView("mail"))
     , ((modWinMask , xK_2), windows $W.greedyView("adm"))
     , ((modWinMask , xK_1), windows $ W.greedyView("nav"))
     , ((modWinMask .|. shiftMask, xK_b), spawn "xscreensaver-command --lock") --Bloquea el escritorio
