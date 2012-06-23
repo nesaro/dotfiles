@@ -105,8 +105,7 @@ logTag = withWindowSet $ traverse (fmap show . getTags) . W.peek
 --statusBarCmd= "dzen2 -bg '#2c2c32' -fg 'grey70' -w 620 -sa c -fn '-*-profont-*-*-*-*-11-*-*-*-*-*-iso8859' -e '' -xs 1 -ta l"
 statusBarCmd = "dzen2 -e 'onstart=lower' -p -ta r -bg '#2e3436' -fg '#babdb6' -h 28 -w 780"
 
-main = do sp <- mkSpawner
-          xmproc <- spawnPipe "xmobar /home/nesaro/.xmobarrc"
+main = do xmproc <- spawnPipe "xmobar /home/nesaro/.xmobarrc"
           xmonad $ ewmh $ withUrgencyHook NoUrgencyHook $  defaultConfig
                      { borderWidth        = 2
                      , normalBorderColor  = "grey30"
@@ -120,8 +119,8 @@ main = do sp <- mkSpawner
                                                 , ppTitle = xmobarColor "green" "" . shorten 50
                                                 , ppExtras = [logTag]
                                                 }
-                     , manageHook         = manageSpawn sp <+> myManageHook2 <+> myManageHook3 <+> manageDocks <+> manageHook defaultConfig -- El ultimo termino viene del modulo de area de paneles
-                     , keys               = newKeys sp
+                     , manageHook         = manageSpawn <+> myManageHook2 <+> myManageHook3 <+> manageDocks <+> manageHook defaultConfig -- El ultimo termino viene del modulo de area de paneles
+                     , keys               = newKeys 
                      , layoutHook         = myLayout
                      , startupHook        = setWMName "LG3D"
                      , focusFollowsMouse  = False
@@ -166,7 +165,7 @@ ladm =  spacing 3 (MosaicAlt M.empty) ||| tiled ||| Roledex ||| Mirror tiled |||
 
 myLayout = avoidStruts $ smartBorders(onWorkspace "chat" lchat $ onWorkspace "adm" ladm lall)
 
-toAdd x sp =
+toAdd x =
     --TAGS
     --((modMask x, xK_f  ), withFocused (addTag "abc"))
     --((modMask x, xK_g  ), tagPrompt defaultXPConfig (\s -> withTaggedGlobal s float)) -- Hace las ventanas con tag flotantes
@@ -204,15 +203,15 @@ toAdd x sp =
 
     --TASKS
     , ((modWinMask, xK_k), SM.submap . M.fromList $ 
-                [ ((modWinMask, xK_a), (windows $ W.greedyView "agenda") >> (sendMessage $ JumpToLayout "MosaicAlt") >> spawnHere sp ("zim") >> spawnHere sp ("gnome-terminal -t task"))
+                [ ((modWinMask, xK_a), (windows $ W.greedyView "agenda") >> (sendMessage $ JumpToLayout "MosaicAlt") >> spawnHere ("zim") >> spawnHere ("gnome-terminal -t task"))
                 , ((modWinMask, xK_b), (windows $ W.greedyView "blog") >> (sendMessage $ JumpToLayout "Tall")  >> spawn ("firefox -P blogger -no-remote http://blogger.com"))
                 , ((modWinMask, xK_c), (windows $ W.greedyView "chat") >> (sendMessage $ JumpToLayout "IM Spacing 3 Tall") >> spawn ("pidgin"))
                 , ((modWinMask, xK_e), (windows $ W.greedyView "mus") >> (sendMessage $ JumpToLayout "Circle") >> spawn ("exaile"))
                 , ((modWinMask, xK_g), (windows $ W.greedyView "gentoo") >> (sendMessage $ JumpToLayout "Full") >> spawn ("firefox -P gentoo -no-remote http://bugs.gentoo.org"))
-                , ((modWinMask, xK_m), (windows $ W.greedyView "mail") >> (sendMessage $ JumpToLayout "Tall") >> spawnHere sp  ("claws-mail") >> spawn ("uzbl.browser -n gmail gmail.com") >> spawn ("twitux"))
-                , ((modWinMask, xK_s), (windows $ W.greedyView "social") >> (sendMessage $ JumpToLayout "Tall") >> spawnHere sp ("uzbl-browser -n twitter --gtk-name=twitter twitter.com"))
-                , ((modWinMask, xK_n), (windows $ W.greedyView "natural") >> (sendMessage $ JumpToLayout "Tall") >> spawnHere sp ("uzbl-browser --gtk-name=natural 127.0.0.1:8000") >> spawnHere sp ("gnome-terminal -t naturaldevelop --profile=coding --working-directory=/home/nesaro/proyectos/naturalcloud.net/") >> spawnHere sp ("gnome-terminal -t djangoserver --working-directory=/home/nesaro/repo/naturalcloud.net/"))
-                , ((modWinMask, xK_p), (windows $ W.greedyView "natural") >> (sendMessage $ JumpToLayout "Tall") >> spawnHere sp ("planner"))
+                , ((modWinMask, xK_m), (windows $ W.greedyView "mail") >> (sendMessage $ JumpToLayout "Tall") >> spawnHere ("claws-mail") >> spawn ("uzbl.browser -n gmail gmail.com") >> spawn ("twitux"))
+                , ((modWinMask, xK_s), (windows $ W.greedyView "social") >> (sendMessage $ JumpToLayout "Tall") >> spawnHere ("uzbl-browser -n twitter --gtk-name=twitter twitter.com"))
+                , ((modWinMask, xK_n), (windows $ W.greedyView "natural") >> (sendMessage $ JumpToLayout "Tall") >> spawnHere ("uzbl-browser --gtk-name=natural 127.0.0.1:8000") >> spawnHere ("gnome-terminal -t naturaldevelop --profile=coding --working-directory=/home/nesaro/proyectos/naturalcloud.net/") >> spawnHere ("gnome-terminal -t djangoserver --working-directory=/home/nesaro/repo/naturalcloud.net/"))
+                , ((modWinMask, xK_p), (windows $ W.greedyView "natural") >> (sendMessage $ JumpToLayout "Tall") >> spawnHere ("planner"))
                 , ((modWinMask, xK_i), (windows $ W.greedyView "simple") >> (sendMessage $ JumpToLayout "Tabbed Simplest") >> spawn ("firefox -P simple -no-remote") >> spawn ("myterm") >> spawn("zim simple"))
                 , ((modWinMask, xK_o), (windows $ W.greedyView "colony") >> (sendMessage $ JumpToLayout "Tabbed Simplest") >> spawn ("gnome-terminal -t colony --profile=coding --working-directory=/home/nesaro/proyectos/colony/github"))
                 , ((modWinMask, xK_v), (windows $ W.greedyView "tv") >> (sendMessage $ JumpToLayout "Full") >> spawn ("kaffeine"))
@@ -283,7 +282,7 @@ toRemove x =
 
 defKeys = keys defaultConfig
 delKeys x  = foldr M.delete           (defKeys x) (toRemove x)
-newKeys sp x = foldr (uncurry M.insert) (delKeys x) (toAdd    x sp)
+newKeys x = foldr (uncurry M.insert) (delKeys x) (toAdd    x)
 --newKeys x  = M.union (keys defaultConfig x) (M.fromList (myKeys x))
 
 myManageHook2 :: ManageHook
