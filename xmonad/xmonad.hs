@@ -110,7 +110,7 @@ main = do xmproc <- spawnPipe "xmobar /home/nesaro/.xmobarrc"
                      { borderWidth        = 2
                      , normalBorderColor  = "grey30"
                      , focusedBorderColor = "#ff0000" 
-                     , workspaces         = ["nav", "adm", "agenda", "chat", "colony", "downloads", "mail", "mus", "natural",  "social", "tr", "tv"] 
+                     , workspaces         = ["nav", "adm", "agenda", "chat", "downloads", "mail", "mus", "tr", "tv"] 
                      , terminal           = "myterm"
                      --, logHook            = do dynamicLogWithPP $ robPP din
                      --                          myLogHook
