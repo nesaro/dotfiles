@@ -263,6 +263,7 @@ toAdd x =
     , ((modWinMask .|. shiftMask, xK_k), spawn "myterm")
     , ((modWinMask .|. shiftMask, xK_o), spawn "uzbl-browser")
     , ((modWinMask .|. shiftMask, xK_i), runOrRaisePrompt defaultXPConfig)
+    , ((modWinMask , xK_z), nextScreen)
     , ((modMask x, xK_BackSpace), focusUrgent) -- Ultima ventana urgente. TODO: Pensar algo mejor para las ventanas blink, tipo añadir tag
     , ((modWinMask, xK_b), sendMessage ToggleStruts) -- Toggle area de paneles
     , ((modWinMask .|. shiftMask, xK_m), sshPrompt defaultXPConfig) -- Toggle area de paneles
