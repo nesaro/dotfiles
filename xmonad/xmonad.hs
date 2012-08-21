@@ -204,16 +204,9 @@ toAdd x =
     --TASKS
     , ((modWinMask, xK_k), SM.submap . M.fromList $ 
                 [ ((modWinMask, xK_a), (windows $ W.greedyView "agenda") >> (sendMessage $ JumpToLayout "MosaicAlt") >> spawnHere ("zim") >> spawnHere ("gnome-terminal -t task"))
-                , ((modWinMask, xK_b), (windows $ W.greedyView "blog") >> (sendMessage $ JumpToLayout "Tall")  >> spawn ("firefox -P blogger -no-remote http://blogger.com"))
                 , ((modWinMask, xK_c), (windows $ W.greedyView "chat") >> (sendMessage $ JumpToLayout "IM Spacing 3 Tall") >> spawn ("pidgin"))
                 , ((modWinMask, xK_e), (windows $ W.greedyView "mus") >> (sendMessage $ JumpToLayout "Circle") >> spawn ("exaile"))
-                , ((modWinMask, xK_g), (windows $ W.greedyView "gentoo") >> (sendMessage $ JumpToLayout "Full") >> spawn ("firefox -P gentoo -no-remote http://bugs.gentoo.org"))
                 , ((modWinMask, xK_m), (windows $ W.greedyView "mail") >> (sendMessage $ JumpToLayout "Tall") >> spawnHere ("claws-mail") >> spawn ("uzbl.browser -n gmail gmail.com") >> spawn ("twitux"))
-                , ((modWinMask, xK_s), (windows $ W.greedyView "social") >> (sendMessage $ JumpToLayout "Tall") >> spawnHere ("uzbl-browser -n twitter --gtk-name=twitter twitter.com"))
-                , ((modWinMask, xK_n), (windows $ W.greedyView "natural") >> (sendMessage $ JumpToLayout "Tall") >> spawnHere ("uzbl-browser --gtk-name=natural 127.0.0.1:8000") >> spawnHere ("gnome-terminal -t naturaldevelop --profile=coding --working-directory=/home/nesaro/proyectos/naturalcloud.net/") >> spawnHere ("gnome-terminal -t djangoserver --working-directory=/home/nesaro/repo/naturalcloud.net/"))
-                , ((modWinMask, xK_p), (windows $ W.greedyView "natural") >> (sendMessage $ JumpToLayout "Tall") >> spawnHere ("planner"))
-                , ((modWinMask, xK_i), (windows $ W.greedyView "simple") >> (sendMessage $ JumpToLayout "Tabbed Simplest") >> spawn ("firefox -P simple -no-remote") >> spawn ("myterm") >> spawn("zim simple"))
-                , ((modWinMask, xK_o), (windows $ W.greedyView "colony") >> (sendMessage $ JumpToLayout "Tabbed Simplest") >> spawn ("gnome-terminal -t colony --profile=coding --working-directory=/home/nesaro/proyectos/colony/github"))
                 , ((modWinMask, xK_v), (windows $ W.greedyView "tv") >> (sendMessage $ JumpToLayout "Full") >> spawn ("kaffeine"))
                 ])
 
