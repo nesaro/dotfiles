@@ -1,0 +1,11 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =9
+let g:netrw_dirhist_1='/home/nesaro/repo/pydsl/pydsl/Grammar'
+let g:netrw_dirhist_2='/home/nesaro/repo/pydsl/pydsl/Memory/Storage/Directory/__pycache__'
+let g:netrw_dirhist_3='/home/nesaro/repo/sloc-18173'
+let g:netrw_dirhist_4='/home/nesaro/repo/pydsl/pydsl/Exchange'
+let g:netrw_dirhist_5='/home/nesaro/repo/pydsl/pydsl/Function'
+let g:netrw_dirhist_6='/home/nesaro/repo/pydsl/pydsl/Memory/Storage'
+let g:netrw_dirhist_7='/home/nesaro/repo/pydsl/pydsl/Memory/Storage/Directory'
+let g:netrw_dirhist_8='/home/nesaro/repo/pydsl/.idea'
+let g:netrw_dirhist_9='/home/nesaro/repo/pydsl/pydsl/Interaction'

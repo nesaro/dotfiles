@@ -1,7 +1,6 @@
 set hidden "Permite poner en background sin guardar
 set nocompatible "Funcionalidades no compatibles con vi
 set history=100
-syntax on
 " set number "Anteponer un numero
 set background=light
 " set background=dark
@@ -11,9 +10,6 @@ set showmatch " que ilumine el parentesis que coincide
 " set is
 " set ic " ignorar mayusculas
 " set si
-set tabstop=4 " 4 para tab
-set expandtab
-set shiftwidth=4  
 " source /usr/share/vim/vimfiles/ftplugin/python/python.vim
 " source /home/bourbaki/vim/vimspell.vim
 " source /home/bourbaki/vim/ada.vim
@@ -44,3 +40,11 @@ set ruler
 "map P :TlistToggle<CR>
 
 "set invlist
+
+set expandtab
+set textwidth=79
+set tabstop=8
+set softtabstop=4
+set shiftwidth=4
+set autoindent
+:syntax on
