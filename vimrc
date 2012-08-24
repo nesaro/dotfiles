@@ -48,3 +48,5 @@ set softtabstop=4
 set shiftwidth=4
 set autoindent
 :syntax on
+map T :TaskList<CR>
+map P :TlistToggle<CR>
