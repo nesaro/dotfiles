@@ -53,6 +53,7 @@ import XMonad.Layout.Magnifier
 import XMonad.Util.Replace
 import XMonad.Actions.WindowGo
 import XMonad.Layout.SimpleDecoration
+import XMonad.Layout.MouseResizableTile
 
 import XMonad.Util.Loggers
 
@@ -129,7 +130,7 @@ main = do xmproc <- spawnPipe "xmobar /home/nesaro/.xmobarrc"
                        tiled = Tall 1 (3%100) (1%2)
 
 
-lall =  spacing 3 (MosaicAlt M.empty) ||| tiled ||| Roledex ||| Mirror tiled ||| noBorders Full ||| magicFocus(noBorders Circle) ||| HG.Grid False ||| SG.Grid ||| borderResize (simpleFloat) ||| simpleTabbed ||| mySplit
+lall =  spacing 3 (MosaicAlt M.empty) ||| mouseResizableTile ||| tiled ||| Roledex ||| Mirror tiled ||| noBorders Full ||| magicFocus(noBorders Circle) ||| HG.Grid False ||| SG.Grid ||| borderResize (simpleFloat) ||| simpleTabbed ||| mySplit
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio
