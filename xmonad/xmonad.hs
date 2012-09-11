@@ -215,7 +215,7 @@ toAdd x =
     , ((modWinMask, xK_l), SM.submap . M.fromList $ 
                 [ ((modWinMask, xK_l), layoutPrompt defaultXPConfig) --Pregunta por el layout
                 , ((modWinMask, xK_c), sendMessage $ JumpToLayout "Circle") 
-                , ((modWinMask, xK_m), sendMessage $ JumpToLayout "MosaicAlt") 
+                , ((modWinMask, xK_m), sendMessage $ JumpToLayout "Spacing 3 MosaicAlt") 
                 , ((modWinMask, xK_t), sendMessage $ JumpToLayout "Tall") 
                 , ((modWinMask .|. shiftMask, xK_t), sendMessage $ JumpToLayout "Magnifier NoMaster Tall") 
                 , ((modWinMask, xK_f), sendMessage $ JumpToLayout "Full") 
