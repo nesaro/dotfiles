@@ -42,7 +42,7 @@ set ruler
 "set invlist
 
 set expandtab
-set textwidth=79
+"set textwidth=79
 set tabstop=8
 set softtabstop=4
 set shiftwidth=4
