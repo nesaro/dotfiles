@@ -251,6 +251,7 @@ toAdd x =
     , ((modWinMask , xK_3), windows $W.greedyView("mail"))
     , ((modWinMask , xK_2), windows $W.greedyView("adm"))
     , ((modWinMask , xK_1), windows $ W.greedyView("nav"))
+    , ((modWinMask , xK_Tab), toggleWS)
     , ((modWinMask .|. shiftMask, xK_b), spawn "xscreensaver-command --lock") --Bloquea el escritorio
     , ((modWinMask .|. shiftMask, xK_s), spawn "xterm -bg black -fg white")
     , ((modWinMask .|. shiftMask, xK_d), spawn "gnome-terminal --profile=coding")
