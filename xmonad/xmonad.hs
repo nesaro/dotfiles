@@ -54,6 +54,7 @@ import XMonad.Util.Replace
 import XMonad.Actions.WindowGo
 import XMonad.Layout.SimpleDecoration
 import XMonad.Layout.MouseResizableTile
+import XMonad.Hooks.ICCCMFocus
 
 import XMonad.Util.Loggers
 
@@ -115,11 +116,11 @@ main = do xmproc <- spawnPipe "xmobar /home/nesaro/.xmobarrc"
                      , terminal           = "myterm"
                      --, logHook            = do dynamicLogWithPP $ robPP din
                      --                          myLogHook
-                     , logHook            = dynamicLogWithPP $ xmobarPP
+                     , logHook            = takeTopFocus >> (dynamicLogWithPP $ xmobarPP
                                                 { ppOutput = hPutStrLn xmproc
                                                 , ppTitle = xmobarColor "green" "" . shorten 50
                                                 , ppExtras = [logTag]
-                                                }
+                                                })
                      , manageHook         = manageSpawn <+> myManageHook2 <+> myManageHook3 <+> manageDocks <+> manageHook defaultConfig -- El ultimo termino viene del modulo de area de paneles
                      , keys               = newKeys 
                      , layoutHook         = myLayout
