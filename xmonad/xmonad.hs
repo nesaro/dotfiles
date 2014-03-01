@@ -112,7 +112,7 @@ main = do xmproc <- spawnPipe "xmobar /home/nesaro/.xmobarrc"
                      { borderWidth        = 2
                      , normalBorderColor  = "grey30"
                      , focusedBorderColor = "#ff0000" 
-                     , workspaces         = ["nav", "adm", "agenda", "chat", "downloads", "mail", "mus", "tr", "tv"] 
+                     , workspaces         = ["nav", "adm", "cal", "chat", "downloads", "mail", "mus", "tr", "tv", "social"] 
                      , terminal           = "myterm"
                      --, logHook            = do dynamicLogWithPP $ robPP din
                      --                          myLogHook
@@ -178,7 +178,6 @@ toAdd x =
                 , ((modWinMask, xK_s), tagPrompt defaultXPConfig (\s -> withFocused (addTag s)))
                 , ((modWinMask, xK_d  ), tagDelPrompt defaultXPConfig) -- Borra el tag de la ventana
                 , ((modWinMask, xK_g  ), tagPrompt defaultXPConfig (\s -> withTaggedGlobalP s shiftHere)) -- Cambia las ventanas con el tag al escritorio actual
-
                 ])
 
     --WINDOWS
@@ -188,7 +187,6 @@ toAdd x =
                 , ((modWinMask, xK_e), goToSelected defaultGSConfig)
                 , ((modWinMask, xK_c), withWorkspace defaultXPConfig (windows . copy))
                 , ((modWinMask, xK_i), withWorkspace defaultXPConfig (windows . W.shift))
-
                 ])
 
     --WORKSPACES
@@ -205,11 +203,10 @@ toAdd x =
 
     --TASKS
     , ((modWinMask, xK_k), SM.submap . M.fromList $ 
-                [ ((modWinMask, xK_a), (windows $ W.greedyView "agenda") >> (sendMessage $ JumpToLayout "MosaicAlt") >> spawnHere ("zim") >> spawnHere ("gnome-terminal -t task"))
+                [ ((modWinMask, xK_a), (windows $ W.greedyView "cal") >> (sendMessage $ JumpToLayout "MosaicAlt") >> spawnHere ("zim") >> spawnHere ("gnome-terminal -t task"))
                 , ((modWinMask, xK_c), (windows $ W.greedyView "chat") >> (sendMessage $ JumpToLayout "IM Spacing 3 Tall") >> spawn ("pidgin"))
-                , ((modWinMask, xK_e), (windows $ W.greedyView "mus") >> (sendMessage $ JumpToLayout "Circle") >> spawn ("exaile"))
-                , ((modWinMask, xK_m), (windows $ W.greedyView "mail") >> (sendMessage $ JumpToLayout "Tall") >> spawnHere ("claws-mail") >> spawn ("uzbl.browser -n gmail gmail.com") >> spawn ("twitux"))
-                , ((modWinMask, xK_v), (windows $ W.greedyView "tv") >> (sendMessage $ JumpToLayout "Full") >> spawn ("kaffeine"))
+                , ((modWinMask, xK_m), (windows $ W.greedyView "mail") >> spawnHere "chromium --app=http://gmail.com")
+                , ((modWinMask, xK_f), (windows $ W.greedyView "social") >> (sendMessage $ JumpToLayout "Full") >> spawnHere "chromium --app=http://facebook.com")
                 ])
 
     --LAYOUTS
@@ -235,22 +232,10 @@ toAdd x =
                 , ((modWinMask, xK_space), sendMessage resetAlt)
                 ])
 
-    --WEBAPPS
-    , ((modWinMask, xK_a), SM.submap . M.fromList $
-            [ ((modWinMask, xK_a),    spawn "uzbl-browser bbs.archlinux.org")
-            , ((modWinMask .|. shiftMask, xK_a),    spawn "uzbl-browser wiki.archlinux.org")
-            , ((modWinMask, xK_m),    spawn "uzbl-browser -n gmail --gtk-name=gmail gmail.com")
-            , ((modWinMask, xK_e),    spawn "google-chrome --app=http://evernote.com")
-            , ((modWinMask, xK_x),    spawn "uzbl-browser xmonad.org")
-            , ((modWinMask, xK_r),    spawn "uzbl-browser --gtk-name=reddit reddit.com")
-            , ((modWinMask, xK_f),    spawn "uzbl-browser --gtk-name=reader reader.google.com")
-            , ((modWinMask, xK_u),    spawn "uzbl-browser uzbl.org")
-            , ((modWinMask, xK_w),    spawn "uzbl-browser wikipedia.org")
-            ])
     , ((modMask x , xK_q), spawn("killall dzen2") >> restart "xmonad" True)
-    , ((modWinMask , xK_4), windows $W.greedyView("chat"))
-    , ((modWinMask , xK_3), windows $W.greedyView("mail"))
-    , ((modWinMask , xK_2), windows $W.greedyView("adm"))
+    , ((modWinMask , xK_4), windows $ W.greedyView("chat"))
+    , ((modWinMask , xK_3), windows $ W.greedyView("mail"))
+    , ((modWinMask , xK_2), windows $ W.greedyView("adm"))
     , ((modWinMask , xK_1), windows $ W.greedyView("nav"))
     , ((modWinMask , xK_Tab), toggleWS)
     , ((modWinMask .|. shiftMask, xK_b), spawn "xscreensaver-command --lock") --Bloquea el escritorio
@@ -293,9 +278,9 @@ myManageHook2 = composeAll
     className   =? "kopete"             --> doF(W.shift "chat" ),
     className   =? "Claws-mail"           --> doF(W.shift "mail" ),
     className   =? "claws-mail"           --> doF(W.shift "mail" ),
-    className   =? "Korganizer"           --> doF(W.shift "agenda" ),
+    className   =? "Korganizer"           --> doF(W.shift "cal" ),
     title   =? "Downloads"           --> doF(W.shift "downloads" ),
-    className   =? "zim"           --> doF(W.shift "agenda" ),
+    className   =? "zim"           --> doF(W.shift "cal" ),
     --className   =? "sylpheed"           --> doF(withFocused (addTag "mail")), -- Pendiente, doF espera un Winset
     title       =? "MPlayer"            --> doFloat,
     className   =? "stalonetray"        --> doIgnore,
