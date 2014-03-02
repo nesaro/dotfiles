@@ -182,7 +182,7 @@ toAdd x =
 
     --WINDOWS
     , ((modWinMask, xK_w), SM.submap . M.fromList $ 
-                [ ((modWinMask, xK_w     ), windowPromptGoto defaultXPConfig)
+                [ ((modWinMask, xK_w     ), windowPromptGoto defaultXPConfig { autoComplete = Just 500000 })
                 , ((modWinMask, xK_i     ), windowPromptBring defaultXPConfig)
                 , ((modWinMask, xK_e), goToSelected defaultGSConfig)
                 , ((modWinMask, xK_c), withWorkspace defaultXPConfig (windows . copy))
@@ -233,6 +233,7 @@ toAdd x =
                 ])
 
     , ((modMask x , xK_q), spawn("killall dzen2") >> restart "xmonad" True)
+    , ((modWinMask , xK_5), windows $ W.greedyView("social"))
     , ((modWinMask , xK_4), windows $ W.greedyView("chat"))
     , ((modWinMask , xK_3), windows $ W.greedyView("mail"))
     , ((modWinMask , xK_2), windows $ W.greedyView("adm"))
