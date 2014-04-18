@@ -193,6 +193,7 @@ toAdd x =
     , ((modWinMask, xK_e), SM.submap . M.fromList $ 
                 [ ((modWinMask, xK_d), removeWorkspace)
                 , ((modWinMask, xK_e), selectWorkspace defaultXPConfig { autoComplete = Just 500000 })
+                , ((modWinMask, xK_n), selectWorkspace defaultXPConfig)
                 , ((modWinMask, xK_r), renameWorkspace defaultXPConfig)
                 ])
 
