@@ -1,8 +1,4 @@
 import XMonad hiding ((|||) )
-import XMonad.Layout.LayoutCombinators   -- use the one from LayoutCombinators instead
-import System.Exit
-import Graphics.X11.Xlib 
-import XMonad.Prompt.XMonad
 import XMonad.Prompt.Shell
 import XMonad.ManageHook
 import XMonad.Actions.CycleWS
@@ -22,51 +18,46 @@ import System.IO
 import XMonad.Operations
 import XMonad.Actions.DwmPromote
 import XMonad.Layout hiding ( (|||)) -- Usando el operador de layoutcomibnators
+import XMonad.Layout.LayoutCombinators   -- use the one from LayoutCombinators instead
 import XMonad.Layout.WorkspaceDir
 import XMonad.Layout.Tabbed
 import XMonad.Layout.Circle
 import XMonad.Layout.WindowNavigation
 import XMonad.Layout.NoBorders
-import XMonad.Prompt.Window
-import XMonad.Prompt.Layout
 import XMonad.Layout.Tabbed
 import XMonad.Layout.SimpleFloat
 import XMonad.Layout.PerWorkspace
-import XMonad.Hooks.ManageDocks -- Sustituye defaultgaps
-import XMonad.Hooks.UrgencyHook
-import XMonad.Layout.ShowWName
-import XMonad.Actions.DynamicWorkspaces
-import XMonad.Actions.CopyWindow
-import XMonad.Actions.SpawnOn
 import XMonad.Layout.Roledex 
 import XMonad.Layout.IM
 import XMonad.Layout.MosaicAlt
 import qualified XMonad.Layout.HintedGrid as HG
 import qualified XMonad.Layout.Grid as SG
 import XMonad.Layout.MagicFocus
-import XMonad.Hooks.EwmhDesktops
 import XMonad.Layout.Spacing
-import XMonad.Actions.TopicSpace
-import XMonad.Actions.GridSelect
 import XMonad.Layout.BorderResize
 import XMonad.Layout.Magnifier
-import XMonad.Util.Replace
-import XMonad.Actions.WindowGo
 import XMonad.Layout.SimpleDecoration
 import XMonad.Layout.MouseResizableTile
+import XMonad.Prompt.Window
+import XMonad.Prompt.Layout
+import XMonad.Actions.DynamicWorkspaces
+import XMonad.Actions.CopyWindow
+import XMonad.Actions.SpawnOn
+import XMonad.Actions.GridSelect
+import XMonad.Actions.WindowGo
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ICCCMFocus
-
 import XMonad.Util.Loggers
+import XMonad.Hooks.ManageDocks -- Sustituye defaultgaps
+import XMonad.Hooks.UrgencyHook
 
 
-import qualified XMonad.Prompt         as P
 import qualified XMonad.Actions.Submap as SM
 import qualified XMonad.Actions.Search as S
 
 
 -- import XMonad.Prompt             ( XPConfig(..), XPPosition(..) )
 --import XMonad.Prompt.Shell       ( shellPrompt )
--- import XMonad.Hooks.ManageDocks  -- Da error en casa
  
 import qualified Data.Map as M
 import Data.Bits ((.|.))
@@ -78,6 +69,7 @@ import Data.Ratio
 
 import XMonad.Hooks.XPropManage
 import Data.List
+import Data.Monoid
 
 
 import System.IO
@@ -104,7 +96,6 @@ logTag :: Logger
 logTag = withWindowSet $ traverse (fmap show . getTags) . W.peek
 
 
---statusBarCmd= "dzen2 -bg '#2c2c32' -fg 'grey70' -w 620 -sa c -fn '-*-profont-*-*-*-*-11-*-*-*-*-*-iso8859' -e '' -xs 1 -ta l"
 statusBarCmd = "dzen2 -e 'onstart=lower' -p -ta r -bg '#2e3436' -fg '#babdb6' -h 28 -w 780"
 
 main = do xmproc <- spawnPipe "xmobar /home/nesaro/.xmobarrc"
@@ -241,6 +232,7 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList
     , ((modWinMask , xK_2), windows $ W.greedyView("adm"))
     , ((modWinMask , xK_1), windows $ W.greedyView("nav"))
     , ((modWinMask , xK_Tab), toggleWS)
+    , ((modm, xK_space ), sendMessage NextLayout)
     , ((modWinMask .|. shiftMask, xK_b), spawn "xscreensaver-command --lock") --Bloquea el escritorio
     , ((modWinMask .|. shiftMask, xK_s), spawn "xterm -bg black -fg white")
     , ((modWinMask .|. shiftMask, xK_d), spawn "gnome-terminal --profile=coding")
@@ -255,7 +247,7 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList
     , ((modm .|. shiftMask , xK_F4), kill1)
 
     --SEARCH ENGINES
-    , ((modWinMask, xK_s), SM.submap $ searchEngineMap $ S.promptSearch P.defaultXPConfig)
+    , ((modWinMask, xK_s), SM.submap $ searchEngineMap $ S.promptSearch defaultXPConfig)
     , ((modm .|. shiftMask, xK_s), SM.submap $ searchEngineMap $ S.selectSearch)
     , ((modm, xK_p), spawn "exe=`dmenu_run` && eval \"exec $exe\"") -- %! Launch dmenu
     , ((modm .|. shiftMask, xK_p), spawn "exe=`dmenu_run` && eval \"exec xterm -e $exe\"") -- %! Launch dmenu
