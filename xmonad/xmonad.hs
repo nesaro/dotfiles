@@ -167,7 +167,7 @@ ladm =  spacing 3 (MosaicAlt M.empty) ||| tiled ||| Roledex ||| Mirror tiled |||
 
 myLayout = avoidStruts $ smartBorders(onWorkspace "chat" lchat $ onWorkspace "adm" ladm lall)
 
-toAdd x =
+newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList
     --TAGS
     --((modMask x, xK_f  ), withFocused (addTag "abc"))
     --((modMask x, xK_g  ), tagPrompt defaultXPConfig (\s -> withTaggedGlobal s float)) -- Hace las ventanas con tag flotantes
@@ -234,7 +234,7 @@ toAdd x =
                 , ((modWinMask, xK_space), sendMessage resetAlt)
                 ])
 
-    , ((modMask x , xK_q), spawn("killall dzen2") >> restart "xmonad" True)
+    , ((modm , xK_q), spawn("killall dzen2") >> restart "xmonad" True)
     , ((modWinMask , xK_5), windows $ W.greedyView("social"))
     , ((modWinMask , xK_4), windows $ W.greedyView("chat"))
     , ((modWinMask , xK_3), windows $ W.greedyView("mail"))
@@ -248,29 +248,18 @@ toAdd x =
     , ((modWinMask .|. shiftMask, xK_o), spawn "uzbl-browser")
     , ((modWinMask .|. shiftMask, xK_i), runOrRaisePrompt defaultXPConfig)
     , ((modWinMask , xK_z), nextScreen)
-    , ((modMask x, xK_BackSpace), focusUrgent) -- Ultima ventana urgente. TODO: Pensar algo mejor para las ventanas blink, tipo añadir tag
+    , ((modm, xK_BackSpace), focusUrgent) -- Ultima ventana urgente. TODO: Pensar algo mejor para las ventanas blink, tipo añadir tag
     , ((modWinMask, xK_b), sendMessage ToggleStruts) -- Toggle area de paneles
     , ((modWinMask .|. shiftMask, xK_m), sshPrompt defaultXPConfig) -- Toggle area de paneles
-    , ((modMask x, xK_F4), kill1)
-    , ((modMask x .|. shiftMask , xK_F4), kill1)
+    , ((modm, xK_F4), kill1)
+    , ((modm .|. shiftMask , xK_F4), kill1)
 
     --SEARCH ENGINES
     , ((modWinMask, xK_s), SM.submap $ searchEngineMap $ S.promptSearch P.defaultXPConfig)
-    , ((modMask x .|. shiftMask, xK_s), SM.submap $ searchEngineMap $ S.selectSearch)
-    , ((modMask x, xK_p), spawn "exe=`dmenu_run` && eval \"exec $exe\"") -- %! Launch dmenu
-    , ((modMask x .|. shiftMask, xK_p), spawn "exe=`dmenu_run` && eval \"exec xterm -e $exe\"") -- %! Launch dmenu
+    , ((modm .|. shiftMask, xK_s), SM.submap $ searchEngineMap $ S.selectSearch)
+    , ((modm, xK_p), spawn "exe=`dmenu_run` && eval \"exec $exe\"") -- %! Launch dmenu
+    , ((modm .|. shiftMask, xK_p), spawn "exe=`dmenu_run` && eval \"exec xterm -e $exe\"") -- %! Launch dmenu
     ]
-
-toRemove x =
-     [(shiftMask .|. modMask x, k) | k <- [xK_1 .. xK_9]]++
-     [(modMask x, k) | k <- [xK_1 .. xK_9]]++
-     [(shiftMask .|. modMask x, k) | k <- [xK_c]]
-     
-
-defKeys = keys defaultConfig
-delKeys x  = foldr M.delete           (defKeys x) (toRemove x)
-newKeys x = foldr (uncurry M.insert) (delKeys x) (toAdd    x)
---newKeys x  = M.union (keys defaultConfig x) (M.fromList (myKeys x))
 
 myManageHook2 :: ManageHook
 myManageHook2 = composeAll 
