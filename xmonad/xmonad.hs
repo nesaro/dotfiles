@@ -158,7 +158,7 @@ ladm =  spacing 3 (MosaicAlt M.empty) ||| tiled ||| Roledex ||| Mirror tiled |||
 
 myLayout = avoidStruts $ smartBorders(onWorkspace "chat" lchat $ onWorkspace "adm" ladm lall)
 
-newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList
+newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     --TAGS
     --((modMask x, xK_f  ), withFocused (addTag "abc"))
     --((modMask x, xK_g  ), tagPrompt defaultXPConfig (\s -> withTaggedGlobal s float)) -- Hace las ventanas con tag flotantes
