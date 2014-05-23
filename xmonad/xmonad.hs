@@ -294,11 +294,9 @@ searchEngineMap method = M.fromList $
                          [ ((modWinMask , xK_g), method S.google)
                          , ((modWinMask , xK_h), method S.hoogle)
                          , ((modWinMask , xK_w), method S.wikipedia)
-                         , ((modWinMask , xK_z), S.promptSearchBrowser defaultXPConfig "zimlauncher" zim)
                          ]
 
 
-zim = S.searchEngine "zim" "/home/nesaro/agenda/zim/ "
 
 
 -- , ((modm .|. shiftMask, xK_g), raise (className =? "Firefox"))
