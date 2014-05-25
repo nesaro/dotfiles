@@ -227,11 +227,6 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
                 ])
 
     , ((modm , xK_q), spawn("killall dzen2") >> restart "xmonad" True)
-    , ((modWinMask , xK_5), windows $ W.greedyView("social"))
-    , ((modWinMask , xK_4), windows $ W.greedyView("chat"))
-    , ((modWinMask , xK_3), windows $ W.greedyView("mail"))
-    , ((modWinMask , xK_2), windows $ W.greedyView("adm"))
-    , ((modWinMask , xK_1), windows $ W.greedyView("nav"))
     , ((modWinMask, xK_Tab), cycleRecentWS [xK_Super_L] xK_Tab xK_Left)
     , ((modm, xK_space ), sendMessage NextLayout)
     , ((modm, xK_Tab ), windows W.focusDown) -- %! Move focus to the next window
@@ -266,6 +261,10 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_p), spawn "exe=`dmenu_run` && eval \"exec $exe\"") -- %! Launch dmenu
     , ((modm .|. shiftMask, xK_p), spawn "exe=`dmenu_run` && eval \"exec xterm -e $exe\"") -- %! Launch dmenu
     ]
+    ++
+    [((m .|. modWinMask, k), windows $ f i)
+        | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
+        , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
 
 myManageHook2 :: ManageHook
 myManageHook2 = composeAll 
