@@ -50,6 +50,7 @@ import XMonad.Hooks.ICCCMFocus
 import XMonad.Util.Loggers
 import XMonad.Hooks.ManageDocks -- Sustituye defaultgaps
 import XMonad.Hooks.UrgencyHook
+import XMonad.Actions.CycleRecentWS
 
 
 import qualified XMonad.Actions.Submap as SM
@@ -231,7 +232,7 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modWinMask , xK_3), windows $ W.greedyView("mail"))
     , ((modWinMask , xK_2), windows $ W.greedyView("adm"))
     , ((modWinMask , xK_1), windows $ W.greedyView("nav"))
-    , ((modWinMask , xK_Tab), toggleWS)
+    , ((modWinMask, xK_Tab), cycleRecentWS [xK_Super_L] xK_Tab xK_Left)
     , ((modm, xK_space ), sendMessage NextLayout)
     , ((modm, xK_Tab ), windows W.focusDown) -- %! Move focus to the next window
     , ((modm .|. shiftMask, xK_Tab ), windows W.focusUp  ) -- %! Move focus to the previous window
