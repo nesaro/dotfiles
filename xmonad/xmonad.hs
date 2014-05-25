@@ -233,6 +233,8 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modWinMask , xK_1), windows $ W.greedyView("nav"))
     , ((modWinMask , xK_Tab), toggleWS)
     , ((modm, xK_space ), sendMessage NextLayout)
+    , ((modm, xK_Tab ), windows W.focusDown) -- %! Move focus to the next window
+    , ((modm .|. shiftMask, xK_Tab ), windows W.focusUp  ) -- %! Move focus to the previous window
     , ((modWinMask .|. shiftMask, xK_b), spawn "xscreensaver-command --lock") --Bloquea el escritorio
     , ((modWinMask .|. shiftMask, xK_s), spawn "xterm -bg black -fg white")
     , ((modWinMask .|. shiftMask, xK_d), spawn "gnome-terminal --profile=coding")
@@ -245,6 +247,17 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modWinMask .|. shiftMask, xK_m), sshPrompt defaultXPConfig) -- Toggle area de paneles
     , ((modm, xK_F4), kill1)
     , ((modm .|. shiftMask , xK_F4), kill1)
+    -- modifying the window order
+    , ((modm,               xK_Return), windows W.swapMaster) -- %! Swap the focused window and the master window
+    , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  ) -- %! Swap the focused window with the next window
+    , ((modm .|. shiftMask, xK_k     ), windows W.swapUp    ) -- %! Swap the focused window with the previous windo
+    -- increase or decrease number of windows in the master area
+    , ((modm              , xK_comma ), sendMessage (IncMasterN 1)) -- %! Increment the number of windows in the master area
+    , ((modm              , xK_period), sendMessage (IncMasterN (-1))) -- %! Deincrement the number of windows in the master area
+        -- resizing the master/slave ratio
+    , ((modm,               xK_h     ), sendMessage Shrink) -- %! Shrink the master area
+    , ((modm,               xK_l     ), sendMessage Expand) -- %! Expand the master area
+
 
     --SEARCH ENGINES
     , ((modWinMask, xK_s), SM.submap $ searchEngineMap $ S.promptSearch defaultXPConfig)
