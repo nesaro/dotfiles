@@ -51,6 +51,7 @@ import XMonad.Util.Loggers
 import XMonad.Hooks.ManageDocks -- Sustituye defaultgaps
 import XMonad.Hooks.UrgencyHook
 import XMonad.Actions.CycleRecentWS
+import System.Exit
 
 
 import qualified XMonad.Actions.Submap as SM
@@ -253,6 +254,7 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         -- resizing the master/slave ratio
     , ((modm,               xK_h     ), sendMessage Shrink) -- %! Shrink the master area
     , ((modm,               xK_l     ), sendMessage Expand) -- %! Expand the master area
+    , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
 
 
     --SEARCH ENGINES
