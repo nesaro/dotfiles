@@ -64,16 +64,9 @@ import qualified XMonad.Actions.Search as S
 import qualified Data.Map as M
 import Data.Bits ((.|.))
 import Data.Ratio
--- import Graphics.X11  -- Da error en casa
-
---import XMonad.Actions.WindowBringer -- Da error en casa
-
-
 import XMonad.Hooks.XPropManage
 import Data.List
 import Data.Monoid
-
-
 import System.IO
 
 -- Necesario para los keybindings:
@@ -107,8 +100,6 @@ main = do xmproc <- spawnPipe "xmobar /home/nesaro/.xmobarrc"
                      , focusedBorderColor = "#ff0000" 
                      , workspaces         = ["nav", "adm", "cal", "chat", "downloads", "mail", "mus", "tr", "tv", "social"] 
                      , terminal           = "myterm"
-                     --, logHook            = do dynamicLogWithPP $ robPP din
-                     --                          myLogHook
                      , logHook            = takeTopFocus >> (dynamicLogWithPP $ xmobarPP
                                                 { ppOutput = hPutStrLn xmproc
                                                 , ppTitle = xmobarColor "green" "" . shorten 50
@@ -160,6 +151,7 @@ ladm =  spacing 3 (MosaicAlt M.empty) ||| tiled ||| Roledex ||| Mirror tiled |||
 
 myLayout = avoidStruts $ smartBorders(onWorkspace "chat" lchat $ onWorkspace "adm" ladm lall)
 
+--toAdd x =
 newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     --TAGS
     --((modMask x, xK_f  ), withFocused (addTag "abc"))
