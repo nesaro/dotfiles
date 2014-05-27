@@ -232,6 +232,7 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_space ), sendMessage NextLayout)
     , ((modm, xK_Tab ), windows W.focusDown) -- %! Move focus to the next window
     , ((modm .|. shiftMask, xK_Tab ), windows W.focusUp  ) -- %! Move focus to the previous window
+    , ((modm, xK_t), withFocused $ windows . W.sink)
     , ((modWinMask .|. shiftMask, xK_b), spawn "xscreensaver-command --lock") --Bloquea el escritorio
     , ((modWinMask .|. shiftMask, xK_s), spawn "xterm -bg black -fg white")
     , ((modWinMask .|. shiftMask, xK_d), spawn "gnome-terminal --profile=coding")
