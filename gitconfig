@@ -5,3 +5,6 @@
 	default = simple
 [color]
 	ui = 1
+
+[alias]
+        la = log --graph --all --decorate --oneline
