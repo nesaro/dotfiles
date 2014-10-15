@@ -1,5 +1,7 @@
 [user]
 	name = Nestor Arocha 
 	email = nesaro@gmail.com
+[push]
+	default = simple
 [color]
 	ui = 1
