@@ -3,3 +3,5 @@
 	email = nesaro@gmail.com
 [color]
 	ui = 1
+[push]
+	default = simple
