@@ -1,7 +1,10 @@
 [user]
 	name = Nestor Arocha 
 	email = nesaro@gmail.com
-[color]
-	ui = 1
 [push]
 	default = simple
+[color]
+	ui = 1
+
+[alias]
+        la = log --graph --all --decorate --oneline
