@@ -8,12 +8,7 @@ set incsearch " Busqueda incremental
 set hlsearch " dejar iluminada la busqueda
 set showmatch " que ilumine el parentesis que coincide
 " set is
-" set ic " ignorar mayusculas
 " set si
-" source /usr/share/vim/vimfiles/ftplugin/python/python.vim
-" source /home/bourbaki/vim/vimspell.vim
-" source /home/bourbaki/vim/ada.vim
-" source $VIMRUNTIME/indent/cpp.vim
 " :au Filetype html,xml,xsl source ~/vim/closetag.vim 
 filetype indent on
 filetype plugin on
@@ -48,8 +43,6 @@ set softtabstop=4
 set shiftwidth=4
 set autoindent
 :syntax on
-map T :TaskList<CR>
-map P :TlistToggle<CR>
 let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplMapWindowNavArrows = 1
 let g:miniBufExplMapCTabSwitchBufs = 1
