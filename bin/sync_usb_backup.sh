@@ -1,0 +1,1 @@
+rsync -av --delete --exclude .thumbnails --exclude .mozilla --exclude .gconf --exclude Music --exclude Videos --exclude .cache --exclude .local/ --exclude .config --exclude repo/mozilla-central/ /home/nesaro/ /mnt/usb/backup/
