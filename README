@@ -1,0 +1,7 @@
+Usage
+=====
+
+mkdir ~/repo &&
+cd ~/repo &&
+git clone https://github.com/nesaro/dotfiles.git &&
+cd dotfiles && ansible-playbook deploy.yml

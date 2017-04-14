@@ -1,0 +1,30 @@
+---
+ - user: nesaro
+   vars:
+       dotfiles_repo: "{{ ansible_env.HOME }}/repo/dotfiles/"
+   hosts: localhost
+   tasks:
+       - file: path="{{ ansible_env.HOME }}/repo/" state=directory
+       - file: path="{{ ansible_env.HOME }}/.pip/" state=directory
+       - file: path="{{ ansible_env.HOME }}/.xmonad/" state=directory
+       - git:
+           repo: https://github.com/nesaro/dotfiles.git
+           dest: "{{ dotfiles_repo }}"
+           version: master
+           update: no
+       - file:
+           src: '{{dotfiles_repo}}/{{ item.src }}'
+           dest: '{{ ansible_env.HOME }}/{{ item.dest }}'
+           state: link
+         with_items:
+           - { src: 'gitconfig', dest: '.gitconfig' }
+           - { src: 'vimrc', dest: '.vimrc' }
+           - { src: 'pip.conf', dest: '.pip/pip.conf' }
+           - { src: '.xmobarrc', dest: '.xmobarrc' }
+           - { src: 'xmonad.hs', dest: '.xmonad/xmonad.hs' }
+
+       #- copy:
+       #    src: 
+       #    dest: {{ ansible_env.HOME }}
+
+       
