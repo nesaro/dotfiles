@@ -22,6 +22,7 @@
            - { src: 'pip.conf', dest: '.pip/pip.conf' }
            - { src: '.xmobarrc', dest: '.xmobarrc' }
            - { src: 'xmonad.hs', dest: '.xmonad/xmonad.hs' }
+           - { src: '.bashrc', dest: '.bashrc' }
 
        #- copy:
        #    src: 
