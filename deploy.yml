@@ -7,6 +7,7 @@
        - file: path="{{ ansible_env.HOME }}/repo/" state=directory
        - file: path="{{ ansible_env.HOME }}/.pip/" state=directory
        - file: path="{{ ansible_env.HOME }}/.xmonad/" state=directory
+       - file: path="{{ ansible_env.HOME }}/.config/" state=directory
        - git:
            repo: https://github.com/nesaro/dotfiles.git
            dest: "{{ dotfiles_repo }}"
@@ -23,6 +24,7 @@
            - { src: '.xmobarrc', dest: '.xmobarrc' }
            - { src: 'xmonad.hs', dest: '.xmonad/xmonad.hs' }
            - { src: '.bashrc', dest: '.bashrc' }
+           - { src: 'redshift.conf', dest: '.config/redshift.conf' }
 
        #- copy:
        #    src: 
