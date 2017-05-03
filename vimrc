@@ -1,7 +1,6 @@
 set hidden "Permite poner en background sin guardar
 set nocompatible "Funcionalidades no compatibles con vi
 set history=100
-" set number "Anteponer un numero
 set background=light
 " set background=dark
 set incsearch " Busqueda incremental
@@ -25,7 +24,6 @@ filetype plugin on
 "runtime macros/matchit.vim "Match expandido
 set wildmode=list:longest "Para el completion tipo bash
 set scrolloff=3
-set ruler
 
 
 "let Tlist_File_Fold_Auto_Close = 1
@@ -42,8 +40,24 @@ set tabstop=8
 set softtabstop=4
 set shiftwidth=4
 set autoindent
-:syntax on
+set syntax=on
 let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplMapWindowNavArrows = 1
 let g:miniBufExplMapCTabSwitchBufs = 1
 let g:miniBufExplModSelTarget = 1
+
+
+set statusline=%t       "tail of the filename
+set statusline+=[%{strlen(&fenc)?&fenc:'none'}, "file encoding
+set statusline+=%{&ff}] "file format
+set statusline+=%h      "help file flag
+set statusline+=%m      "modified flag
+set statusline+=%r      "read only flag
+set statusline+=%y      "filetype
+set statusline+=%=      "left/right separator
+set statusline+=%c,     "cursor column
+set statusline+=%l/%L   "cursor line/total lines
+set statusline+=\ %P    "percent through file
+
+set laststatus=2
+
