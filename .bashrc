@@ -113,7 +113,9 @@ if ! shopt -oq posix; then
   fi
 fi
 
-source /etc/bash_completion.d/virtualenvwrapper
+if [ -f "/etc/bash_completion/virtualenvwrapper" ] ; then
+    source /etc/bash_completion.d/virtualenvwrapper
+fi
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
