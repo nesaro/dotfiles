@@ -1,0 +1,8 @@
+root = /home/nesaro
+root = /home/nesaro/infosdv_enc/backup/
+path = doc/
+path = personas/
+ignore = Path {doc/zim/.zim}
+ignore = Path {doc/inform/snippets/.git}
+ignore = Name .*.kdbx.lock
+
