@@ -5,4 +5,10 @@ path = personas/
 ignore = Path {doc/zim/.zim}
 ignore = Path {doc/inform/snippets/.git}
 ignore = Name .*.kdbx.lock
+ignore = Path {doc/ulpgc/tercero}
+ignore = Path {doc/ulpgc/segundo}
+ignore = Path {doc/*.tar.gz}
+ignore = Name *.pyc
+ignore = Name __pycache__
+ignore = Name *.kdb.lock
 
