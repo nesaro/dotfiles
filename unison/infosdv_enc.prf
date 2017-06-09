@@ -14,4 +14,6 @@ ignore = Path {proyectos/pydsl}
 ignore = Name *.pyc
 ignore = Name __pycache__
 ignore = Name *.kdb.lock
+ignore = Name .svn
+ignore = Name .git
 
