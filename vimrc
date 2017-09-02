@@ -1,11 +1,11 @@
 set hidden "Permite poner en background sin guardar
 set nocompatible "Funcionalidades no compatibles con vi
 set history=100
-set background=light
-" set background=dark
 set incsearch " Busqueda incremental
 set hlsearch " dejar iluminada la busqueda
 set showmatch " que ilumine el parentesis que coincide
+let g:solarized_termcolors=256
+colorscheme solarized
 " set is
 " set si
 " :au Filetype html,xml,xsl source ~/vim/closetag.vim 
@@ -40,7 +40,7 @@ set tabstop=8
 set softtabstop=4
 set shiftwidth=4
 set autoindent
-set syntax=on
+syntax on
 let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplMapWindowNavArrows = 1
 let g:miniBufExplMapCTabSwitchBufs = 1
