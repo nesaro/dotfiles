@@ -4,8 +4,17 @@ set history=100
 set incsearch " Busqueda incremental
 set hlsearch " dejar iluminada la busqueda
 set showmatch " que ilumine el parentesis que coincide
-let g:solarized_termcolors=256
-colorscheme solarized
+
+
+if has( "gui_running" )
+    colo PaperColor
+elseif  $TERM =~ '256'
+    colo PaperColor
+else
+    colo desert
+endif
+
+
 " set is
 " set si
 " :au Filetype html,xml,xsl source ~/vim/closetag.vim 
