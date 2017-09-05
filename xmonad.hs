@@ -197,8 +197,8 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
                 ])
 
     --LAYOUTS
-    , ((modWinMask, xK_l), SM.submap . M.fromList $ 
-                [ ((modWinMask, xK_l), layoutPrompt defaultXPConfig) --Pregunta por el layout
+    , ((modWinMask, xK_p), SM.submap . M.fromList $
+                [ ((modWinMask, xK_p), layoutPrompt defaultXPConfig) --Pregunta por el layout
                 , ((modWinMask, xK_c), sendMessage $ JumpToLayout "Circle") 
                 , ((modWinMask, xK_m), sendMessage $ JumpToLayout "Spacing 3 MosaicAlt") 
                 , ((modWinMask, xK_t), sendMessage $ JumpToLayout "Tall") 
@@ -225,7 +225,7 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_Tab ), windows W.focusDown) -- %! Move focus to the next window
     , ((modm .|. shiftMask, xK_Tab ), windows W.focusUp  ) -- %! Move focus to the previous window
     , ((modm, xK_t), withFocused $ windows . W.sink)
-    , ((modWinMask .|. shiftMask, xK_b), spawn "xscreensaver-command --lock") --Bloquea el escritorio
+    , ((modWinMask, xK_l), spawn "xscreensaver-command --lock") --Bloquea el escritorio
     , ((modWinMask .|. shiftMask, xK_s), spawn "xterm -bg black -fg white")
     , ((modWinMask .|. shiftMask, xK_d), spawn "gnome-terminal --profile=coding")
     , ((modWinMask .|. shiftMask, xK_k), spawn "myterm")
