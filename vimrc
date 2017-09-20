@@ -3,7 +3,7 @@ set nocompatible "Funcionalidades no compatibles con vi
 set history=100
 set incsearch " Busqueda incremental
 set hlsearch " dejar iluminada la busqueda
-set showmatch " que ilumine el parentesis que coincide
+set showmatch
 
 
 if has( "gui_running" )

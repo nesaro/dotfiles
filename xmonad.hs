@@ -225,7 +225,11 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_Tab ), windows W.focusDown) -- %! Move focus to the next window
     , ((modm .|. shiftMask, xK_Tab ), windows W.focusUp  ) -- %! Move focus to the previous window
     , ((modm, xK_t), withFocused $ windows . W.sink)
+    {% if screensaver == "lightlocker" %}
+    , ((modWinMask, xK_l), spawn "light-locker-command --lock")
+    {% else %}
     , ((modWinMask, xK_l), spawn "xscreensaver-command --lock") --Bloquea el escritorio
+    {% endif %}
     , ((modWinMask .|. shiftMask, xK_s), spawn "xterm -bg black -fg white")
     , ((modWinMask .|. shiftMask, xK_d), spawn "gnome-terminal --profile=coding")
     , ((modWinMask .|. shiftMask, xK_k), spawn "myterm")
