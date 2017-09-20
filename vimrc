@@ -10,6 +10,9 @@ if has( "gui_running" )
     colo PaperColor
 elseif  $TERM =~ '256'
     colo PaperColor
+elseif  $COLORTERM == 'gnome-terminal'
+    set t_Co=256
+    colo PaperColor
 else
     colo desert
 endif
