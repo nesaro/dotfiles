@@ -2,6 +2,10 @@ Usage
 =====
 
 Create localhost.yml file with screensaver var
+```
+---
+screensaver: "lightlocker"
+```
 
 ```
 mkdir ~/repo &&

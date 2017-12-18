@@ -16,3 +16,6 @@ ignore = Name *.kdb.lock
 ignore = Name .svn
 ignore = Name .git
 
+
+ignore = Path {doc/.directory}
+ignore = Path {proyectos/cantdelete}
