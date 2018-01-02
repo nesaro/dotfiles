@@ -66,3 +66,8 @@ set statusline+=\ %P    "percent through file
 
 set laststatus=2
 
+call plug#begin('~/.vim/plugged')
+Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
+call plug#end()
+
+let g:vimwiki_list = [{'path':'~/doc/zim/', 'path_html':'~/doc/zim/', 'syntax': 'markdown', 'ext': '.md'}]
