@@ -11,6 +11,7 @@
        - file: path="{{ ansible_env.HOME }}/.xmonad/" state=directory
        - file: path="{{ ansible_env.HOME }}/.config/" state=directory
        - file: path="{{ ansible_env.HOME }}/.unison/" state=directory
+       - file: path="{{ ansible_env.HOME }}/.local/share/konsole/" state=directory
        - git:
            repo: https://github.com/nesaro/dotfiles.git
            dest: "{{ dotfiles_repo }}"
