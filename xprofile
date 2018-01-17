@@ -1,3 +1,7 @@
+{% if screensaver == "lightlocker" %}
+light-locker --lock-after-screensaver 10&
+{% else %}
 xscreensaver -no-splash &
+{% endif %}
 xfce4-panel &
 redshift &
