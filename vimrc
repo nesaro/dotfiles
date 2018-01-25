@@ -53,10 +53,6 @@ set softtabstop=4
 set shiftwidth=4
 set autoindent
 syntax on
-let g:miniBufExplMapWindowNavVim = 1
-let g:miniBufExplMapWindowNavArrows = 1
-let g:miniBufExplMapCTabSwitchBufs = 1
-let g:miniBufExplModSelTarget = 1
 
 
 set statusline=%n\ %f\        "tail of the filename
@@ -73,3 +69,8 @@ set statusline+=\ %P    "percent through file
 
 set laststatus=2
 
+call plug#begin('~/.vim/plugged')
+Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
+call plug#end()
+
+let g:vimwiki_list = [{'path':'~/doc/zim/', 'path_html':'~/doc/zim/', 'syntax': 'markdown', 'ext': '.md'}]
