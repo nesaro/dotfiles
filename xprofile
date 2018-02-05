@@ -1,6 +1,6 @@
 {% if screensaver == "lightlocker" %}
 light-locker --lock-after-screensaver 10&
-{% else %}
+{% elif screensaver == "xscreensaver" %}
 xscreensaver -no-splash &
 {% endif %}
 xfce4-panel &
