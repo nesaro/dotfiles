@@ -5,3 +5,4 @@ xscreensaver -no-splash &
 {% endif %}
 xfce4-panel &
 redshift &
+xsetroot -solid black &
