@@ -257,7 +257,7 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     --SEARCH ENGINES
     , ((modWinMask, xK_s), SM.submap $ searchEngineMap $ S.promptSearch defaultXPConfig)
     , ((modm .|. shiftMask, xK_s), SM.submap $ searchEngineMap $ S.selectSearch)
-    , ((modm, xK_p), spawn "exe=`rofi -show run -kb-row-select \"Tab\" -kb-row-tab \"\"` && eval \"exec $exe\"") -- %! Launch dmenu
+    , ((modm, xK_p), spawn "exe=`PATH=$PATH:$HOME/bin rofi -show run -kb-row-select \"Tab\" -kb-row-tab \"\"` && eval \"exec $exe\"") -- %! Launch dmenu
     ]
     ++
     [((m .|. modWinMask, k), windows $ f i)
