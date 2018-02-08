@@ -35,6 +35,7 @@
            - { src: 'bin/unison', dest: 'bin/unison' }
            - { src: 'konsole.profile', dest: '/.local/share/konsole/Profile 1.profile' }
            - { src: 'dillorc', dest: '/.dillo/dillorc' }
+           - { src: 'taskrc', dest: '/.taskrc' }
 
        - template:
            src: '{{dotfiles_repo}}/{{ item.src }}'
