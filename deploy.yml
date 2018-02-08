@@ -42,3 +42,4 @@
          with_items:
            - { src: 'xmonad.hs', dest: '.xmonad/xmonad.hs' }
            - { src: 'xprofile', dest: '.xsessionrc' }
+           - { src: 'unison/infosdv.prf', dest: '.unison/infosdv.prf' }
