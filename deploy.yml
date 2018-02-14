@@ -11,7 +11,9 @@
        - file: path="{{ ansible_env.HOME }}/.xmonad/" state=directory
        - file: path="{{ ansible_env.HOME }}/.config/" state=directory
        - file: path="{{ ansible_env.HOME }}/.unison/" state=directory
+       - file: path="{{ ansible_env.HOME }}/.dillo/" state=directory
        - file: path="{{ ansible_env.HOME }}/.local/share/konsole/" state=directory
+       - file: path="{{ ansible_env.HOME }}/bin/" state=directory
        - git:
            repo: https://github.com/nesaro/dotfiles.git
            dest: "{{ dotfiles_repo }}"
@@ -30,11 +32,15 @@
            - { src: '.bashrc', dest: '.bashrc' }
            - { src: 'redshift.conf', dest: '.config/redshift.conf' }
            - { src: 'unison/infosdv_enc.prf', dest: '.unison/infosdv_enc.prf' }
-           - { src: 'xprofile', dest: '.xsessionrc' }
+           - { src: 'bin/unison', dest: 'bin/unison' }
            - { src: 'konsole.profile', dest: '/.local/share/konsole/Profile 1.profile' }
+           - { src: 'dillorc', dest: '/.dillo/dillorc' }
+           - { src: 'taskrc', dest: '/.taskrc' }
 
        - template:
            src: '{{dotfiles_repo}}/{{ item.src }}'
            dest: '{{ ansible_env.HOME }}/{{ item.dest }}'
          with_items:
            - { src: 'xmonad.hs', dest: '.xmonad/xmonad.hs' }
+           - { src: 'xprofile', dest: '.xsessionrc' }
+           - { src: 'unison/infosdv.prf', dest: '.unison/infosdv.prf' }
