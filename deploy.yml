@@ -33,6 +33,7 @@
            - { src: 'redshift.conf', dest: '.config/redshift.conf' }
            - { src: 'unison/infosdv_enc.prf', dest: '.unison/infosdv_enc.prf' }
            - { src: 'bin/unison', dest: 'bin/unison' }
+           - { src: 'bin/ice-firefox', dest: 'bin/ice-firefox' }
            - { src: 'konsole.profile', dest: '/.local/share/konsole/Profile 1.profile' }
            - { src: 'dillorc', dest: '/.dillo/dillorc' }
            - { src: 'taskrc', dest: '/.taskrc' }
