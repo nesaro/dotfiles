@@ -279,9 +279,7 @@ myManageHook2 = composeAll
     --className   =? "sylpheed"           --> doF(withFocused (addTag "mail")), -- Pendiente, doF espera un Winset
     title       =? "MPlayer"            --> doFloat,
     className   =? "stalonetray"        --> doIgnore,
-    className   =? "trayer"             --> doIgnore,
     className   =? "fbpanel"            --> doIgnore,
-    className   =? "Gkrellm"            --> doIgnore,
     className   =? "Gkrellm2"            --> doIgnore ] 
 
 --managehook alternativo
