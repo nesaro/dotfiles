@@ -6,7 +6,7 @@ xscreensaver -no-splash &
 {% if panel == "xfce" %}
 xfce4-panel &
 {% elif panel == "trayer" %}
-trayer --SetPartialStrut true --edge right
+trayer --SetPartialStrut true --edge right &
 {% endif %}
 redshift &
 xsetroot -solid black &
