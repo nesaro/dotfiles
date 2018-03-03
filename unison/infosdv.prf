@@ -1,7 +1,7 @@
 root = /home/nesaro
 root = ssh://{{ backup_host }}//home/nesaro
 path = .task
-path = Public
+path = cloud
 ignore = Name .*.kdbx.lock
 ignore = Name *.pyc
 ignore = Name *.o

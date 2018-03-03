@@ -10,3 +10,4 @@ trayer --SetPartialStrut true --edge right &
 {% endif %}
 redshift &
 xsetroot -solid black &
+xmonad

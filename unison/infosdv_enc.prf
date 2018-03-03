@@ -15,6 +15,7 @@ ignore = Name __pycache__
 ignore = Name *.kdb.lock
 ignore = Name .svn
 ignore = Name .git
+ignore = Name venv
 
 
 ignore = Path {doc/.directory}
