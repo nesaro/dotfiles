@@ -3,6 +3,11 @@ light-locker --lock-after-screensaver 10&
 {% elif screensaver == "xscreensaver" %}
 xscreensaver -no-splash &
 {% endif %}
+{% if panel == "xfce" %}
 xfce4-panel &
+{% elif panel == "trayer" %}
+trayer --SetPartialStrut true --edge right &
+{% endif %}
 redshift &
 xsetroot -solid black &
+xmonad
