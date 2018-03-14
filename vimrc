@@ -74,3 +74,5 @@ Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
 call plug#end()
 
 let g:vimwiki_list = [{'path':'~/doc/zim/', 'path_html':'~/doc/zim/', 'syntax': 'markdown', 'ext': '.md'}]
+
+autocmd BufEnter *.md :setlocal filetype=markdown
