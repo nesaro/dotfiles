@@ -26,7 +26,6 @@ import XMonad.Layout.Tabbed
 import XMonad.Layout.Circle
 import XMonad.Layout.WindowNavigation
 import XMonad.Layout.NoBorders
-import XMonad.Layout.Tabbed
 import XMonad.Layout.SimpleFloat
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.Roledex 
@@ -53,6 +52,7 @@ import XMonad.Util.Loggers
 import XMonad.Hooks.ManageDocks -- Sustituye defaultgaps
 import XMonad.Hooks.UrgencyHook
 import XMonad.Actions.CycleRecentWS
+import XMonad.Layout.BoringWindows as BO
 import System.Exit
 
 
@@ -96,7 +96,7 @@ logTag = withWindowSet $ traverse (fmap show . getTags) . W.peek
 statusBarCmd = "dzen2 -e 'onstart=lower' -p -ta r -bg '#2e3436' -fg '#babdb6' -h 28 -w 780"
 
 main = do xmproc <- spawnPipe "xmobar /home/nesaro/.xmobarrc"
-          xmonad $ docks $ ewmh $ withUrgencyHook NoUrgencyHook $  defaultConfig
+          xmonad $ docks $ ewmh $ withUrgencyHook NoUrgencyHook $  xfceConfig
                      { borderWidth        = 2
                      , normalBorderColor  = "grey30"
                      , focusedBorderColor = "#ff0000" 
@@ -151,7 +151,7 @@ ladm =  spacing 3 (MosaicAlt M.empty) ||| tiled ||| Roledex ||| Mirror tiled |||
      delta2   = 3/100
      ratio2   = 60/100
 
-myLayout = avoidStruts $ minimize $ smartBorders(onWorkspace "chat" lchat $ onWorkspace "adm" ladm lall)
+myLayout = boringWindows $ avoidStruts $ minimize $ smartBorders(onWorkspace "chat" lchat $ onWorkspace "adm" ladm lall)
 
 --toAdd x =
 newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
@@ -224,8 +224,8 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm , xK_q), spawn("killall dzen2") >> restart "xmonad" True)
     , ((modWinMask, xK_Tab), cycleRecentWS [xK_Super_L] xK_Tab xK_Left)
     , ((modm, xK_space ), sendMessage NextLayout)
-    , ((modm, xK_Tab ), windows W.focusDown) -- %! Move focus to the next window
-    , ((modm .|. shiftMask, xK_Tab ), windows W.focusUp  ) -- %! Move focus to the previous window
+    , ((modm, xK_Tab ), BO.focusDown) -- %! Move focus to the next window
+    , ((modm .|. shiftMask, xK_Tab ), BO.focusUp  ) -- %! Move focus to the previous window
     , ((modm, xK_t), withFocused $ windows . W.sink)
     {% if screensaver == "lightlocker" %}
     , ((modWinMask, xK_l), spawn "light-locker-command --lock")
