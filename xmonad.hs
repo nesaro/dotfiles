@@ -1,4 +1,6 @@
 import XMonad hiding ((|||) )
+import XMonad.Config.Xfce
+import XMonad.Layout.Minimize
 import XMonad.Prompt.Shell
 import XMonad.ManageHook
 import XMonad.Actions.CycleWS
@@ -103,7 +105,7 @@ main = do xmproc <- spawnPipe "xmobar /home/nesaro/.xmobarrc"
                      , logHook            = takeTopFocus >> (dynamicLogWithPP $ xmobarPP
                                                 { ppOutput = hPutStrLn xmproc
                                                 , ppTitle = xmobarColor "green" "" . shorten 50
-                                                , ppExtras = [logTag]
+                                                , ppExtras = [logTag, loadAvg]
                                                 })
                      , manageHook         = manageSpawn <+> myManageHook2 <+> myManageHook3 <+> manageHook defaultConfig -- El ultimo termino viene del modulo de area de paneles
                      , keys               = newKeys 
@@ -149,7 +151,7 @@ ladm =  spacing 3 (MosaicAlt M.empty) ||| tiled ||| Roledex ||| Mirror tiled |||
      delta2   = 3/100
      ratio2   = 60/100
 
-myLayout = avoidStruts $ smartBorders(onWorkspace "chat" lchat $ onWorkspace "adm" ladm lall)
+myLayout = avoidStruts $ minimize $ smartBorders(onWorkspace "chat" lchat $ onWorkspace "adm" ladm lall)
 
 --toAdd x =
 newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
@@ -167,7 +169,7 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     --WINDOWS
     , ((modWinMask, xK_w), SM.submap . M.fromList $ 
-                [ ((modWinMask, xK_w     ), windowPromptGoto defaultXPConfig { autoComplete = Just 500000 })
+                [ ((modWinMask, xK_w     ), windowPromptGoto defaultXPConfig { autoComplete = Just 500000 } >> withFocused (sendMessage . RestoreMinimizedWin))
                 , ((modWinMask, xK_i     ), windowPromptBring defaultXPConfig)
                 , ((modWinMask, xK_e), goToSelected defaultGSConfig)
                 , ((modWinMask, xK_c), withWorkspace defaultXPConfig (windows . copy))
@@ -259,6 +261,8 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modWinMask, xK_s), SM.submap $ searchEngineMap $ S.promptSearch defaultXPConfig)
     , ((modm .|. shiftMask, xK_s), SM.submap $ searchEngineMap $ S.selectSearch)
     , ((modm, xK_p), spawn "exe=`PATH=$PATH:$HOME/bin rofi -show run -kb-row-select \"Tab\" -kb-row-tab \"\"` && eval \"exec $exe\"") -- %! Launch dmenu
+    , ((modm,               xK_m     ), withFocused minimizeWindow)
+    , ((modm .|. shiftMask, xK_m     ), sendMessage RestoreNextMinimizedWin)
     ]
     ++
     [((m .|. modWinMask, k), windows $ f i)
