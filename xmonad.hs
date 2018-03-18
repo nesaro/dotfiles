@@ -99,7 +99,7 @@ main = do xmproc <- spawnPipe "xmobar /home/nesaro/.xmobarrc"
                      , normalBorderColor  = "grey30"
                      , focusedBorderColor = "#ff0000" 
                      , workspaces         = ["nav", "adm", "cal", "chat", "downloads", "mail", "mus", "tr", "tv", "social"] 
-                     , terminal           = "myterm"
+                     , terminal           = "xfce4-terminal"
                      , logHook            = takeTopFocus >> (dynamicLogWithPP $ xmobarPP
                                                 { ppOutput = hPutStrLn xmproc
                                                 , ppTitle = xmobarColor "green" "" . shorten 50
@@ -252,6 +252,7 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_h     ), sendMessage Shrink) -- %! Shrink the master area
     , ((modm,               xK_l     ), sendMessage Expand) -- %! Expand the master area
     , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
+    --, ((modm .|. shiftMask, xK_q     ), spawn "xfce4-session-logout")
 
 
     --SEARCH ENGINES
