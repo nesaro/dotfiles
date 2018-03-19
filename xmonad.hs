@@ -97,7 +97,7 @@ statusBarCmd = "dzen2 -e 'onstart=lower' -p -ta r -bg '#2e3436' -fg '#babdb6' -h
 
 main = do xmproc <- spawnPipe "xmobar /home/nesaro/.xmobarrc"
           xmonad $ docks $ ewmh $ withUrgencyHook NoUrgencyHook $  xfceConfig
-                     { borderWidth        = 2
+                     { borderWidth        = 3
                      , normalBorderColor  = "grey30"
                      , focusedBorderColor = "#ff0000" 
                      , workspaces         = ["nav", "adm", "cal", "chat", "downloads", "mail", "mus", "tr", "tv", "social"] 
