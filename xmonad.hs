@@ -244,8 +244,11 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         -- resizing the master/slave ratio
     , ((modm,               xK_h     ), sendMessage Shrink) -- %! Shrink the master area
     , ((modm,               xK_l     ), sendMessage Expand) -- %! Expand the master area
+    {% if de is defined and de == "xfce" %}
+    , ((modm .|. shiftMask, xK_q     ), spawn "xfce4-session-logout")
+    {% else %}
     , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
-    --, ((modm .|. shiftMask, xK_q     ), spawn "xfce4-session-logout")
+    {% endif %}
 
 
     --SEARCH ENGINES
