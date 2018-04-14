@@ -299,8 +299,6 @@ xPropMatches = [ ([ (wM_CLASS, any ("gimp"==))], (\w -> float w >> return (W.shi
                , ([ (wM_CLASS, any ("Sylpheed" ==))], pmX (addTag "mail"))
                , ([ (wM_CLASS, any ("Firefox" ==))], pmX (addTag "nav"))
                , ([ (wM_CLASS, any ("Opera" ==))], pmX (addTag "nav"))
-               -- , ([ (wM_NAME, any ("Iceweasel" `isInfixOf`))], pmP (W.shift "nav"))
-               -- , ([ (wM_NAME, any ("Opera" `isInfixOf`))], pmP (W.shift "nav"))
                ]
 
 -- Submap de searchengines
@@ -313,6 +311,3 @@ searchEngineMap method = M.fromList $
 
 
 
--- , ((modm .|. shiftMask, xK_g), raise (className =? "Firefox"))
---  , ((modm .|. shiftMask, xK_b), runOrRaise "firefox" (className =? "Firefox"))
---
