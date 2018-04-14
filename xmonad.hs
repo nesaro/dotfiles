@@ -189,15 +189,6 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modWinMask , xK_Right), moveTo Next NonEmptyWS) 
     , ((modWinMask , xK_Left), moveTo Prev NonEmptyWS) 
 
-    --TASKS
-    , ((modWinMask, xK_k), SM.submap . M.fromList $ 
-                [ ((modWinMask, xK_a), (windows $ W.greedyView "cal") >> (sendMessage $ JumpToLayout "MosaicAlt") >> spawnHere ("zim") >> spawnHere ("gnome-terminal -t task"))
-                , ((modWinMask, xK_c), (windows $ W.greedyView "chat") >> (sendMessage $ JumpToLayout "IM Spacing 3 Tall") >> spawn ("pidgin"))
-                , ((modWinMask, xK_m), (windows $ W.greedyView "mail") >> spawnHere "chromium --app=http://gmail.com")
-                , ((modWinMask, xK_f), (windows $ W.greedyView "social") >> (sendMessage $ JumpToLayout "Full") >> spawnHere "chromium --app=http://facebook.com")
-                , ((modWinMask, xK_l), (windows $ W.greedyView "cal") >> (sendMessage $ JumpToLayout "Full") >> spawnHere "chromium --app=http://calendar.google.com")
-                ])
-
     --LAYOUTS
     , ((modWinMask, xK_p), SM.submap . M.fromList $
                 [ ((modWinMask, xK_p), layoutPrompt defaultXPConfig) --Pregunta por el layout
