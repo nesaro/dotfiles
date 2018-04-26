@@ -20,3 +20,4 @@ ignore = Name venv
 
 ignore = Path {doc/.directory}
 ignore = Path {proyectos/cantdelete}
+ignore = Path {doc/cdbackups}
