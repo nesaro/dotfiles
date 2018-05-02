@@ -228,6 +228,8 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modWinMask .|. shiftMask, xK_k), spawn "myterm")
     , ((modWinMask .|. shiftMask, xK_o), spawn "uzbl-browser")
     , ((modWinMask .|. shiftMask, xK_i), runOrRaisePrompt defaultXPConfig)
+    , ((modm, xK_Return), windows W.swapMaster)
+    , ((modm, xK_KP_Enter), windows W.swapMaster)
     , ((modWinMask , xK_z), nextScreen)
     , ((modm, xK_BackSpace), focusUrgent) -- Ultima ventana urgente. TODO: Pensar algo mejor para las ventanas blink, tipo añadir tag
     , ((modWinMask, xK_b), sendMessage ToggleStruts) -- Toggle area de paneles
