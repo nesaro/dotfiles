@@ -96,7 +96,12 @@ logTag = withWindowSet $ traverse (fmap show . getTags) . W.peek
 statusBarCmd = "dzen2 -e 'onstart=lower' -p -ta r -bg '#2e3436' -fg '#babdb6' -h 28 -w 780"
 
 main = do xmproc <- spawnPipe "xmobar /home/nesaro/.xmobarrc"
+{% if xmonad_docks == "new" %}
           xmonad $ docks $ ewmh $ withUrgencyHook NoUrgencyHook $  xfceConfig
+{% else %}
+          xmonad $ ewmh $ withUrgencyHook NoUrgencyHook $  defaultConfig
+{% endif %}
+
                      { borderWidth        = 3
                      , normalBorderColor  = "grey30"
                      , focusedBorderColor = "#ff0000" 
@@ -107,7 +112,7 @@ main = do xmproc <- spawnPipe "xmobar /home/nesaro/.xmobarrc"
                                                 , ppTitle = xmobarColor "green" "" . shorten 50
                                                 , ppExtras = [logTag, loadAvg]
                                                 })
-                     , manageHook         = manageSpawn <+> myManageHook2 <+> myManageHook3 <+> manageHook defaultConfig -- El ultimo termino viene del modulo de area de paneles
+                     , manageHook         = manageSpawn <+> myManageHook2 <+> myManageHook3 {% if xmonad_docks == "new" %}<+> manageDocks {% endif%}<+> manageHook defaultConfig -- El ultimo termino viene del modulo de area de paneles
                      , keys               = newKeys 
                      , layoutHook         = myLayout
                      , startupHook        = setWMName "LG3D"
