@@ -277,8 +277,11 @@ myManageHook2 = composeAll
     className   =? "zim"           --> doF(W.shift "cal" ),
     --className   =? "sylpheed"           --> doF(withFocused (addTag "mail")), -- Pendiente, doF espera un Winset
     title       =? "MPlayer"            --> doFloat,
+    className   =? "xfce4-appfinder"    --> doFloat,
+    className   =? "Xfce4-appfinder"    --> doFloat,
     className   =? "stalonetray"        --> doIgnore,
     className   =? "fbpanel"            --> doIgnore,
+    className   =? "xfdesktop"            --> doIgnore,
     className   =? "Gkrellm2"            --> doIgnore ] 
 
 --managehook alternativo
