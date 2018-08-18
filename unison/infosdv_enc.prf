@@ -16,6 +16,7 @@ ignore = Name *.kdb.lock
 ignore = Name .svn
 ignore = Name .git
 ignore = Name venv
+ignore = Name venv3
 
 
 ignore = Path {doc/.directory}
