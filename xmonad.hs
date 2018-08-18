@@ -97,9 +97,10 @@ statusBarCmd = "dzen2 -e 'onstart=lower' -p -ta r -bg '#2e3436' -fg '#babdb6' -h
 
 main = do xmproc <- spawnPipe "xmobar /home/nesaro/.xmobarrc"
 {% if xmonad_docks == "new" %}
-          xmonad $ docks $ ewmh $ withUrgencyHook NoUrgencyHook $  xfceConfig
+          xmonad $ docks $ ewmh $ withUrgencyHook NoUrgencyHook $  {% if de is defined and de == "xfce" %} xfceConfig {% else %} defaultConfig {% endif %}
+    
 {% else %}
-          xmonad $ ewmh $ withUrgencyHook NoUrgencyHook $  defaultConfig
+          xmonad $ ewmh $ withUrgencyHook NoUrgencyHook $  {% if de is defined and de == "xfce" %} xfceConfig {% else %} defaultConfig {% endif %}
 {% endif %}
 
                      { borderWidth        = 3
@@ -289,6 +290,7 @@ myManageHook2 = composeAll
     className   =? "stalonetray"        --> doIgnore,
     className   =? "fbpanel"            --> doIgnore,
     className   =? "xfdesktop"            --> doIgnore,
+    className   =? "xfce4-panel"            --> doIgnore,
     className   =? "Gkrellm2"            --> doIgnore ] 
 
 --managehook alternativo
