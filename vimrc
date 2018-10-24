@@ -59,15 +59,38 @@ set laststatus=2
 call plug#begin('~/.vim/plugged')
 Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
 Plug 'vim-airline/vim-airline'
+Plug 'ag.vim/ag.vim'
 call plug#end()
 
 let g:vimwiki_list = [{'path':'~/doc/zim/', 'path_html':'~/doc/zim/', 'syntax': 'markdown', 'ext': '.md'}]
 
 autocmd BufEnter *.md :setlocal filetype=markdown
 :set wildignore+=venv/**
+:set wildignore+=venv3/**
 
 cabbrev lvim
       \ lvim /\<lt><C-R><C-W>\>/gj
       \ *<C-R>=(expand("%:e")=="" ? "" : ".".expand("%:e"))<CR>
       \ <Bar> lw
       \ <C-Left><C-Left><C-Left>
+
+
+command! -complete=shellcmd -nargs=+ Shell call s:RunShellCommand(<q-args>)
+function! s:RunShellCommand(cmdline)
+  echo a:cmdline
+  let expanded_cmdline = a:cmdline
+  for part in split(a:cmdline, ' ')
+     if part[0] =~ '\v[%#<]'
+        let expanded_part = fnameescape(expand(part))
+        let expanded_cmdline = substitute(expanded_cmdline, part, expanded_part, '')
+     endif
+  endfor
+  botright new
+  setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile nowrap
+  call setline(1, 'You entered:    ' . a:cmdline)
+  call setline(2, 'Expanded Form:  ' .expanded_cmdline)
+  call setline(3,substitute(getline(2),'.','=','g'))
+  execute '$read !'. expanded_cmdline
+  setlocal nomodifiable
+  1
+endfunction
