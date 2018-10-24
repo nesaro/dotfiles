@@ -97,9 +97,10 @@ statusBarCmd = "dzen2 -e 'onstart=lower' -p -ta r -bg '#2e3436' -fg '#babdb6' -h
 
 main = do xmproc <- spawnPipe "xmobar /home/nesaro/.xmobarrc"
 {% if xmonad_docks == "new" %}
-          xmonad $ docks $ ewmh $ withUrgencyHook NoUrgencyHook $  xfceConfig
+          xmonad $ docks $ ewmh $ withUrgencyHook NoUrgencyHook $  {% if de is defined and de == "xfce" %} xfceConfig {% else %} defaultConfig {% endif %}
+    
 {% else %}
-          xmonad $ ewmh $ withUrgencyHook NoUrgencyHook $  defaultConfig
+          xmonad $ ewmh $ withUrgencyHook NoUrgencyHook $  {% if de is defined and de == "xfce" %} xfceConfig {% else %} defaultConfig {% endif %}
 {% endif %}
 
                      { borderWidth        = 3
@@ -112,7 +113,7 @@ main = do xmproc <- spawnPipe "xmobar /home/nesaro/.xmobarrc"
                                                 , ppTitle = xmobarColor "green" "" . shorten 50
                                                 , ppExtras = [logTag, loadAvg]
                                                 })
-                     , manageHook         = manageSpawn <+> myManageHook2 <+> myManageHook3 {% if xmonad_docks == "new" %}<+> manageDocks {% endif%}<+> manageHook defaultConfig -- El ultimo termino viene del modulo de area de paneles
+                     , manageHook         = manageSpawn <+> myManageHook2 <+> myManageHook3 {% if xmonad_docks != "new" %}<+> manageDocks {% endif%}<+> manageHook defaultConfig -- El ultimo termino viene del modulo de area de paneles
                      , keys               = newKeys 
                      , layoutHook         = myLayout
                      , startupHook        = setWMName "LG3D"
@@ -253,6 +254,8 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_l     ), sendMessage Expand) -- %! Expand the master area
     {% if de is defined and de == "xfce" %}
     , ((modm .|. shiftMask, xK_q     ), spawn "xfce4-session-logout")
+    {% elif de is defined and de == "lxde" %}
+    , ((modm .|. shiftMask, xK_q     ), spawn "lxsession-logout")
     {% else %}
     , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
     {% endif %}
@@ -289,6 +292,7 @@ myManageHook2 = composeAll
     className   =? "stalonetray"        --> doIgnore,
     className   =? "fbpanel"            --> doIgnore,
     className   =? "xfdesktop"            --> doIgnore,
+    className   =? "xfce4-panel"            --> doIgnore,
     className   =? "Gkrellm2"            --> doIgnore ] 
 
 --managehook alternativo

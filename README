@@ -5,6 +5,9 @@ Create localhost.yml file with screensaver var
 ```
 ---
 screensaver: "lightlocker"
+panel: "xfce"
+de: "xfce"
+xmonad_docks: new
 ```
 
 ```
