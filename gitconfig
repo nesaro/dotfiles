@@ -9,5 +9,6 @@
         la = log --graph --all --decorate --oneline
 [merge]
         tool = vimdiff
-
+[interactive]
+        singleKey = true
 
