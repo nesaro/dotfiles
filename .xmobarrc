@@ -1,4 +1,4 @@
-Config { font = "-misc-fixed-*-*-*-*-12-*-*-*-*-*-*-*"
+Config { font = "-misc-fixed-*-*-*-*-15-*-*-*-*-*-*-*"
        , bgColor = "black"
        , fgColor = "grey"
        , position = TopW L 95
@@ -10,7 +10,6 @@ Config { font = "-misc-fixed-*-*-*-*-12-*-*-*-*-*-*-*"
                     , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
                     , Run Memory ["-t","Mem: <usedratio>%"] 10
                     , Run Swap [] 10
-                    , Run Com "uname" ["-s","-r"] "" 36000
                     , Run StdinReader 
     		        , Run Date "%a %b %_d %H:%M" "date" 10
                     ]
