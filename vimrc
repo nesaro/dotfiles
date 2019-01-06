@@ -94,3 +94,6 @@ function! s:RunShellCommand(cmdline)
   setlocal nomodifiable
   1
 endfunction
+
+nmap <F6> :.w !bash <CR>
+nmap <F7> :execute getline(".") <CR>
