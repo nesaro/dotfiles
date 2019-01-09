@@ -62,6 +62,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'ag.vim/ag.vim'
 call plug#end()
 
+let g:airline#extensions#obsession#enabled = 1
 let g:vimwiki_list = [{'path':'~/doc/zim/', 'path_html':'~/doc/zim/', 'syntax': 'markdown', 'ext': '.md'}]
 
 autocmd BufEnter *.md :setlocal filetype=markdown
