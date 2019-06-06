@@ -1,0 +1,9 @@
+source ~/.vimrc
+call plug#begin('~/.vim/plugged')
+Plug 'vim-airline/vim-airline'
+Plug 'ag.vim/ag.vim'
+Plug 'junegunn/fzf.vim'
+Plug 'https://github.com/Alok/notational-fzf-vim'
+call plug#end()
+
+let g:nv_search_paths = ['~/doc/wiki', '~/writing', '~/code', 'docs.md' , './notes.md']
