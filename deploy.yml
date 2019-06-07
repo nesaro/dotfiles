@@ -27,6 +27,7 @@
          with_items:
            - { src: 'gitconfig', dest: '.gitconfig' }
            - { src: 'vimrc', dest: '.vimrc' }
+           - { src: '.vimrc-nv', dest: '.vimrc-nv' }
            - { src: 'vim', dest: '.vim' }
            - { src: 'pip.conf', dest: '.pip/pip.conf' }
            - { src: '.xmobarrc', dest: '.xmobarrc' }

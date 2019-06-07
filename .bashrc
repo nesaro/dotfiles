@@ -125,4 +125,4 @@ alias tasks="vim $HOME/tasks/"
 alias sync_mobile_music="rsync -e 'ssh -p 2222' -ruvz --delete /home/nesaro/Music/tango/ root@192.168.1.77:/3362-3431/emulated/0/Music"
 #alias sync_usb="rsync -av --delete --exclude .mozilla --exclude .gconf --exclude Music --exclude Videos --exclude .cache --exclude .local/share/Trash/ --exclude .config . /mnt/usb/backup/"
 
-alias nv='vim -u $HOME/.vimrc-nv'
+alias nv='vim -u $HOME/.vimrc-nv -c NV'
