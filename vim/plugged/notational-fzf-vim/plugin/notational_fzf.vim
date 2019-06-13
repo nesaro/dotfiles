@@ -203,6 +203,7 @@ command! -nargs=* -bang NV
                    \ '--no-messages',
                    \ s:nv_ignore_pattern,
                    \ '--no-heading',
+                   \ '--no-ignore',
                    \ '--with-filename',
                    \ ((<q-args> is '') ?
                      \ '"\S"' :
