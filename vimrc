@@ -103,3 +103,5 @@ endfunction
 
 nmap <F6> :.w !bash <CR>
 nmap <F7> :execute getline(".") <CR>
+set nomodeline
+nnoremap gb :ls<CR>:b<Space>
