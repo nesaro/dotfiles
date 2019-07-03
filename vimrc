@@ -66,6 +66,8 @@ Plug 'ag.vim/ag.vim'
 call plug#end()
 
 let g:airline#extensions#obsession#enabled = 1
+"let g:airline#extensions#tabline#enabled = 1
+let g:airline_section_c = "%<%<%{bufnr('%')} %{airline#extensions#fugitiveline#bufname()}%m %#__accent_red#%{airline#util#wrap(airline#parts#readonly(),0)}%#__restore__#"
 let g:vimwiki_list = [{'path':'~/doc/zim/', 'path_html':'~/doc/zim/', 'syntax': 'markdown', 'ext': '.md'}]
 
 autocmd BufEnter *.md :setlocal filetype=markdown
