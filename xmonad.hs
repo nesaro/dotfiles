@@ -16,6 +16,9 @@ import XMonad.Prompt.RunOrRaise
 --Dynamiclog
 import XMonad.Hooks.DynamicLog  -- ( PP(..), dynamicLogWithPP, dzenColor, wrap, defaultPP )
 import XMonad.Util.Run
+{% if xmonad_multi_keys %}
+import XMonad.Util.EZConfig(additionalKeys, additionalKeysP)
+{% endif %}
 import System.IO
 import XMonad.Operations
 import XMonad.Actions.DwmPromote
@@ -118,12 +121,12 @@ main = do xmproc <- spawnPipe "xmobar /home/nesaro/.xmobarrc"
                      , layoutHook         = myLayout
                      , startupHook        = setWMName "LG3D"
                      , focusFollowsMouse  = False
-                     }
+                     } {% if xmonad_multi_keys %} `additionalKeysP` extra_keys{% endif %}
                      where
                        tiled = Tall 1 (3%100) (1%2)
 
 
-lall =  spacing 3 (MosaicAlt M.empty) ||| mouseResizableTile ||| tiled ||| Roledex ||| Mirror tiled ||| noBorders Full ||| magicFocus(noBorders Circle) ||| HG.Grid False ||| SG.Grid ||| borderResize (simpleFloat) ||| simpleTabbed ||| mySplit
+lall = spacing 3 (MosaicAlt M.empty) ||| mouseResizableTile ||| tiled ||| noBorders Roledex ||| Mirror tiled ||| Full ||| magicFocus(noBorders Circle) ||| HG.Grid False ||| SG.Grid ||| borderResize (simpleFloat) ||| simpleTabbed ||| mySplit
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio
@@ -138,16 +141,7 @@ lall =  spacing 3 (MosaicAlt M.empty) ||| mouseResizableTile ||| tiled ||| Roled
      delta2   = 3/100
      -- Default proportion of screen occupied by master pane
      ratio2   = 60/100
-lchat = withIM (1%7) (Role "buddy_list") (spacing 2 (tiled))
-  where
-     tiled   = Tall nmaster delta ratio
-     nmaster = 1
-     ratio   = 1/2
-     delta   = 3/100
-     mySplit = magnifiercz' 1.4 $ Tall nmaster delta2 ratio2
-     delta2   = 3/100
-     ratio2   = 60/100
-ladm =  spacing 3 (MosaicAlt M.empty) ||| tiled ||| Roledex ||| Mirror tiled ||| noBorders Full |||  HG.Grid False ||| SG.Grid ||| simpleTabbed ||| mySplit
+ladm = spacing 3 (MosaicAlt M.empty) ||| tiled ||| Roledex ||| Mirror tiled ||| noBorders Full |||  HG.Grid False ||| SG.Grid ||| simpleTabbed ||| mySplit
   where
      tiled   = Tall nmaster delta ratio
      nmaster = 1
@@ -157,7 +151,23 @@ ladm =  spacing 3 (MosaicAlt M.empty) ||| tiled ||| Roledex ||| Mirror tiled |||
      delta2   = 3/100
      ratio2   = 60/100
 
-myLayout = boringWindows $ avoidStruts $ minimize $ smartBorders(onWorkspace "chat" lchat $ onWorkspace "adm" ladm lall)
+myLayout = boringWindows $ avoidStruts $ smartBorders $ spacingRaw False (Border 10 10 400 10) True (Border 10 10 10 10) True $ onWorkspace "adm" ladm lall
+
+{% if xmonad_multi_keys %}
+extra_keys = [
+    ("<XF86AudioRaiseVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ +1.5%")
+    , ("<XF86AudioLowerVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@  -1.5%")
+    , ("<XF86AudioMute>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")    
+
+    , ("<XF86AudioPlay>", spawn "playerctl play-pause")    
+    , ("<XF86AudioPrev>", spawn "playerctl previous")    
+    , ("<XF86AudioNext>", spawn "playerctl next")    
+
+    , ("<XF86MonBrightnessUp>", spawn "xbacklight +5")    
+    , ("<XF86MonBrightnessDown>", spawn "xbacklight -5")    
+    ]
+
+{% endif %}
 
 --toAdd x =
 newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
@@ -175,7 +185,7 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     --WINDOWS
     , ((modWinMask, xK_w), SM.submap . M.fromList $ 
-                [ ((modWinMask, xK_w     ), windowPromptGoto defaultXPConfig { autoComplete = Just 500000 } >> withFocused (sendMessage . RestoreMinimizedWin))
+                [ ((modWinMask, xK_w     ), windowPromptGoto defaultXPConfig { autoComplete = Just 500000 })
                 , ((modWinMask, xK_i     ), windowPromptBring defaultXPConfig)
                 , ((modWinMask, xK_e), goToSelected defaultGSConfig)
                 , ((modWinMask, xK_c), withWorkspace defaultXPConfig (windows . copy))
@@ -217,6 +227,14 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
                 , ((modWinMask, xK_d    ), withFocused (sendMessage . wideWindowAlt))
                 , ((modWinMask, xK_space), sendMessage resetAlt)
                 ])
+    
+    --SPACING
+    , ((modWinMask, xK_a), SM.submap . M.fromList $ 
+                [ ((modWinMask, xK_m    ), toggleSmartSpacing)
+                , ((modWinMask, xK_s    ), toggleScreenSpacingEnabled)
+                , ((modWinMask, xK_w    ), toggleWindowSpacingEnabled)
+                ])
+
 
     , ((modm , xK_q), spawn("killall dzen2") >> restart "xmonad" True)
     , ((modWinMask, xK_Tab), cycleRecentWS [xK_Super_L] xK_Tab xK_Left)
@@ -265,8 +283,6 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modWinMask, xK_s), SM.submap $ searchEngineMap $ S.promptSearch defaultXPConfig)
     , ((modm .|. shiftMask, xK_s), SM.submap $ searchEngineMap $ S.selectSearch)
     , ((modm, xK_p), spawn "exe=`PATH=$PATH:$HOME/bin rofi -show run -kb-row-select \"Tab\" -kb-row-tab \"\"` && eval \"exec $exe\"") -- %! Launch dmenu
-    , ((modm,               xK_m     ), withFocused minimizeWindow)
-    , ((modm .|. shiftMask, xK_m     ), sendMessage RestoreNextMinimizedWin)
     ]
     ++
     [((m .|. modWinMask, k), windows $ f i)
