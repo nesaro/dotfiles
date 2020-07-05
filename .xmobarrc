@@ -4,16 +4,32 @@ Config { font = "-misc-fixed-*-*-*-*-15-*-*-*-*-*-*-*"
        , position = TopW L 95
        , hideOnStart = False
        , lowerOnStart = False
-       , commands = [ Run Weather "EGPF" ["-t","<station>: <tempC>C","-L","18","-H","25","--normal","green","--high","red","--low","lightblue"] 36000
-                    , Run Network "wlan0" ["-L","0","-H","32","--normal","green","--high","red"] 10
-                    , Run Network "eth0" ["-L","0","-H","32","--normal","green","--high","red"] 10
-                    , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
-                    , Run Memory ["-t","Mem: <usedratio>%"] 10
-                    , Run Swap [] 10
+       , commands = [ Run Network "1" ["-L","0","-H","32","--normal","green","--high","red"] 10
+                    , Run Network "2" ["-L","0","-H","32","--normal","green","--high","red"] 10
+                    , Run Network "3" ["-L","0","-H","32","--normal","green","--high","red"] 10
+                    , Run Memory ["-t","M:<usedratio>%"] 10
+                    , Run Swap ["--template", "S:<usedratio>%"] 10
                     , Run StdinReader 
-    		        , Run Date "%a %b %_d %H:%M" "date" 10
-                    ]
+    		    , Run Date "%a %b %_d %H:%M" "date" 10
+		    , Run Battery        [ "--template" , "B:<acstatus>"
+					 , "--Low"      , "10"        -- units: %
+					 , "--High"     , "80"        -- units: %
+					 , "--low"      , "darkred"
+					 , "--normal"   , "darkorange"
+					 , "--high"     , "darkgreen"
+
+					 , "--" -- battery specific options
+						   -- discharging status
+						   , "-o"	, "<left>% (<timeleft>)"
+						   -- AC "on" status
+						   , "-O"	, "<fc=#dAA520>Charging</fc>"
+						   -- charged status
+						   , "-i"	, "<fc=#006000>Charged</fc>"
+					 ] 50
+
+				]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%memory% ** %swap% | %wlan0% <fc=#ee9a00>%date%</fc> |  %StdinReader%"
+       , template = "%memory% %swap% | %1% %2% %3% <fc=#ee9a00>%date%</fc> \
+                    \ %battery% | %StdinReader%"
        }

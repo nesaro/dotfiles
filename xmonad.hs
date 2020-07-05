@@ -1,6 +1,5 @@
 import XMonad hiding ((|||) )
 import XMonad.Config.Xfce
-import XMonad.Layout.Minimize
 import XMonad.Prompt.Shell
 import XMonad.ManageHook
 import XMonad.Actions.CycleWS
@@ -54,7 +53,6 @@ import XMonad.Hooks.ICCCMFocus
 import XMonad.Util.Loggers
 import XMonad.Hooks.ManageDocks -- Sustituye defaultgaps
 import XMonad.Hooks.UrgencyHook
-import XMonad.Actions.CycleRecentWS
 import XMonad.Layout.BoringWindows as BO
 import System.Exit
 
@@ -141,7 +139,7 @@ lall = spacing 3 (MosaicAlt M.empty) ||| mouseResizableTile ||| tiled ||| noBord
      delta2   = 3/100
      -- Default proportion of screen occupied by master pane
      ratio2   = 60/100
-ladm = spacing 3 (MosaicAlt M.empty) ||| tiled ||| Roledex ||| Mirror tiled ||| noBorders Full |||  HG.Grid False ||| SG.Grid ||| simpleTabbed ||| mySplit
+ladm = spacing 3 (MosaicAlt M.empty) ||| tiled ||| Roledex ||| Mirror tiled ||| Full |||  HG.Grid False ||| SG.Grid ||| simpleTabbed ||| mySplit
   where
      tiled   = Tall nmaster delta ratio
      nmaster = 1
@@ -237,7 +235,7 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
 
     , ((modm , xK_q), spawn("killall dzen2") >> restart "xmonad" True)
-    , ((modWinMask, xK_Tab), cycleRecentWS [xK_Super_L] xK_Tab xK_Left)
+    , ((modWinMask, xK_Tab), toggleWS)
     , ((modm, xK_space ), sendMessage NextLayout)
     , ((modm, xK_Tab ), BO.focusDown) -- %! Move focus to the next window
     , ((modm .|. shiftMask, xK_Tab ), BO.focusUp  ) -- %! Move focus to the previous window
