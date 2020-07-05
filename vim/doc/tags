@@ -55,6 +55,14 @@ Tlist_Update_File_Tags()	taglist.txt	/*Tlist_Update_File_Tags()*
 Utl-chgOverview	utl_usr.txt	/*Utl-chgOverview*
 bold	orgguide.txt	/*bold*
 digraph-completion	unicode.txt	/*digraph-completion*
+g:notmuch_custom_search_maps	notmuch.txt	/*g:notmuch_custom_search_maps*
+g:notmuch_custom_show_maps	notmuch.txt	/*g:notmuch_custom_show_maps*
+g:notmuch_date_format	notmuch.txt	/*g:notmuch_date_format*
+g:notmuch_datetime_format	notmuch.txt	/*g:notmuch_datetime_format*
+g:notmuch_folders	notmuch.txt	/*g:notmuch_folders*
+g:notmuch_folders_count_threads	notmuch.txt	/*g:notmuch_folders_count_threads*
+g:notmuch_reader	notmuch.txt	/*g:notmuch_reader*
+g:notmuch_sendmail	notmuch.txt	/*g:notmuch_sendmail*
 g:org_agenda_files	orgguide.txt	/*g:org_agenda_files*
 g:org_export_emacs	orgguide.txt	/*g:org_export_emacs*
 g:org_export_init_script	orgguide.txt	/*g:org_export_init_script*
@@ -68,6 +76,11 @@ g:org_todo_keyword_faces	orgguide.txt	/*g:org_todo_keyword_faces*
 g:org_todo_keywords	orgguide.txt	/*g:org_todo_keywords*
 i_CTRL-X_CTRL-G	unicode.txt	/*i_CTRL-X_CTRL-G*
 i_CTRL-X_CTRL-Z	unicode.txt	/*i_CTRL-X_CTRL-Z*
+notmuch-config	notmuch.txt	/*notmuch-config*
+notmuch-intro	notmuch.txt	/*notmuch-intro*
+notmuch-mappings	notmuch.txt	/*notmuch-mappings*
+notmuch-usage	notmuch.txt	/*notmuch-usage*
+notmuch.txt	notmuch.txt	/*notmuch.txt*
 org	orgguide.txt	/*org*
 org-mappings	orgguide.txt	/*org-mappings*
 org-toc	orgguide.txt	/*org-toc*

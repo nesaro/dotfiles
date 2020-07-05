@@ -1,21 +1,32 @@
+call plug#begin('~/.vim/plugged')
+Plug 'vim-airline/vim-airline'
+Plug 'ag.vim/ag.vim'
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
+call plug#end()
+
 set hidden "Permite poner en background sin guardar
 set nocompatible "Funcionalidades no compatibles con vi
 set history=100
 set incsearch " Busqueda incremental
 set hlsearch " dejar iluminada la busqueda
 set showmatch
+set background=dark
 
 
 if has( "gui_running" )
-    colo PaperColor
+    "colo PaperColor
+    colo solarized
 elseif  $TERM =~ '256'
-    colo PaperColor
+    colo solarized
 elseif  $TERM == 'screen'
     set t_Co=256
-    colo PaperColor
+    "colo PaperColor
+    colo solarized
 elseif  $COLORTERM == 'gnome-terminal'
     set t_Co=256
-    colo PaperColor
+    "colo PaperColor
+    colo solarize
 else
     colo desert
 endif
@@ -59,18 +70,11 @@ syntax on
 
 set laststatus=2
 
-call plug#begin('~/.vim/plugged')
-Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
-Plug 'vim-airline/vim-airline'
-Plug 'ag.vim/ag.vim'
-call plug#end()
-
 let g:airline#extensions#obsession#enabled = 1
 "let g:airline#extensions#tabline#enabled = 1
 let g:airline_section_c = "%<%<%{bufnr('%')} %{airline#extensions#fugitiveline#bufname()}%m %#__accent_red#%{airline#util#wrap(airline#parts#readonly(),0)}%#__restore__#"
-let g:vimwiki_list = [{'path':'~/doc/zim/', 'path_html':'~/doc/zim/', 'syntax': 'markdown', 'ext': '.md'}]
 
-autocmd BufEnter *.md :setlocal filetype=markdown
+"autocmd BufEnter *.md :setlocal filetype=markdown
 :set wildignore+=venv/**
 :set wildignore+=venv3/**
 

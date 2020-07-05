@@ -6,4 +6,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'https://github.com/Alok/notational-fzf-vim'
 call plug#end()
 
+
+"let g:nv_default_extension = '.md'
 let g:nv_search_paths = ['~/doc/wiki', '~/writing', '~/code', 'docs.md' , './notes.md']
+let g:nv_ignore_pattern = ['.git', 'misc*', '*.pdf']
+let g:use_short_pathnames = 1
