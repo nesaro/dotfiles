@@ -1,6 +1,5 @@
 import XMonad hiding ((|||) )
 import XMonad.Config.Xfce
-import XMonad.Layout.Minimize
 import XMonad.Prompt.Shell
 import XMonad.ManageHook
 import XMonad.Actions.CycleWS
@@ -16,6 +15,9 @@ import XMonad.Prompt.RunOrRaise
 --Dynamiclog
 import XMonad.Hooks.DynamicLog  -- ( PP(..), dynamicLogWithPP, dzenColor, wrap, defaultPP )
 import XMonad.Util.Run
+{% if xmonad_multi_keys %}
+import XMonad.Util.EZConfig(additionalKeys, additionalKeysP)
+{% endif %}
 import System.IO
 import XMonad.Operations
 import XMonad.Actions.DwmPromote
@@ -51,7 +53,6 @@ import XMonad.Hooks.ICCCMFocus
 import XMonad.Util.Loggers
 import XMonad.Hooks.ManageDocks -- Sustituye defaultgaps
 import XMonad.Hooks.UrgencyHook
-import XMonad.Actions.CycleRecentWS
 import XMonad.Layout.BoringWindows as BO
 import System.Exit
 
@@ -97,32 +98,33 @@ statusBarCmd = "dzen2 -e 'onstart=lower' -p -ta r -bg '#2e3436' -fg '#babdb6' -h
 
 main = do xmproc <- spawnPipe "xmobar /home/nesaro/.xmobarrc"
 {% if xmonad_docks == "new" %}
-          xmonad $ docks $ ewmh $ withUrgencyHook NoUrgencyHook $  xfceConfig
+          xmonad $ docks $ ewmh $ withUrgencyHook NoUrgencyHook $  {% if de is defined and de == "xfce" %} xfceConfig {% else %} defaultConfig {% endif %}
+    
 {% else %}
-          xmonad $ ewmh $ withUrgencyHook NoUrgencyHook $  defaultConfig
+          xmonad $ ewmh $ withUrgencyHook NoUrgencyHook $  {% if de is defined and de == "xfce" %} xfceConfig {% else %} defaultConfig {% endif %}
 {% endif %}
 
                      { borderWidth        = 3
                      , normalBorderColor  = "grey30"
                      , focusedBorderColor = "#ff0000" 
-                     , workspaces         = ["nav", "adm", "cal", "chat", "downloads", "mail", "mus", "tr", "tv", "social"] 
+                     , workspaces         = ["nav", "adm", "cal", "chat", "mail", "mus", "tr", "rss", "social"] 
                      , terminal           = "xfce4-terminal"
                      , logHook            = takeTopFocus >> (dynamicLogWithPP $ xmobarPP
                                                 { ppOutput = hPutStrLn xmproc
                                                 , ppTitle = xmobarColor "green" "" . shorten 50
                                                 , ppExtras = [logTag, loadAvg]
                                                 })
-                     , manageHook         = manageSpawn <+> myManageHook2 <+> myManageHook3 {% if xmonad_docks == "new" %}<+> manageDocks {% endif%}<+> manageHook defaultConfig -- El ultimo termino viene del modulo de area de paneles
+                     , manageHook         = manageSpawn <+> myManageHook2 <+> myManageHook3 {% if xmonad_docks != "new" %}<+> manageDocks {% endif%}<+> manageHook defaultConfig -- El ultimo termino viene del modulo de area de paneles
                      , keys               = newKeys 
                      , layoutHook         = myLayout
                      , startupHook        = setWMName "LG3D"
                      , focusFollowsMouse  = False
-                     }
+                     } {% if xmonad_multi_keys %} `additionalKeysP` extra_keys{% endif %}
                      where
                        tiled = Tall 1 (3%100) (1%2)
 
 
-lall =  spacing 3 (MosaicAlt M.empty) ||| mouseResizableTile ||| tiled ||| Roledex ||| Mirror tiled ||| noBorders Full ||| magicFocus(noBorders Circle) ||| HG.Grid False ||| SG.Grid ||| borderResize (simpleFloat) ||| simpleTabbed ||| mySplit
+lall = spacing 3 (MosaicAlt M.empty) ||| mouseResizableTile ||| tiled ||| noBorders Roledex ||| Mirror tiled ||| Full ||| magicFocus(noBorders Circle) ||| HG.Grid False ||| SG.Grid ||| borderResize (simpleFloat) ||| simpleTabbed ||| mySplit
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio
@@ -137,16 +139,7 @@ lall =  spacing 3 (MosaicAlt M.empty) ||| mouseResizableTile ||| tiled ||| Roled
      delta2   = 3/100
      -- Default proportion of screen occupied by master pane
      ratio2   = 60/100
-lchat = withIM (1%7) (Role "buddy_list") (spacing 2 (tiled))
-  where
-     tiled   = Tall nmaster delta ratio
-     nmaster = 1
-     ratio   = 1/2
-     delta   = 3/100
-     mySplit = magnifiercz' 1.4 $ Tall nmaster delta2 ratio2
-     delta2   = 3/100
-     ratio2   = 60/100
-ladm =  spacing 3 (MosaicAlt M.empty) ||| tiled ||| Roledex ||| Mirror tiled ||| noBorders Full |||  HG.Grid False ||| SG.Grid ||| simpleTabbed ||| mySplit
+ladm = spacing 3 (MosaicAlt M.empty) ||| tiled ||| Roledex ||| Mirror tiled ||| Full |||  HG.Grid False ||| SG.Grid ||| simpleTabbed ||| mySplit
   where
      tiled   = Tall nmaster delta ratio
      nmaster = 1
@@ -156,7 +149,23 @@ ladm =  spacing 3 (MosaicAlt M.empty) ||| tiled ||| Roledex ||| Mirror tiled |||
      delta2   = 3/100
      ratio2   = 60/100
 
-myLayout = boringWindows $ avoidStruts $ minimize $ smartBorders(onWorkspace "chat" lchat $ onWorkspace "adm" ladm lall)
+myLayout = boringWindows $ avoidStruts $ smartBorders $ spacingRaw False (Border 10 10 400 10) True (Border 10 10 10 10) True $ onWorkspace "adm" ladm lall
+
+{% if xmonad_multi_keys %}
+extra_keys = [
+    ("<XF86AudioRaiseVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ +1.5%")
+    , ("<XF86AudioLowerVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@  -1.5%")
+    , ("<XF86AudioMute>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")    
+
+    , ("<XF86AudioPlay>", spawn "playerctl play-pause")    
+    , ("<XF86AudioPrev>", spawn "playerctl previous")    
+    , ("<XF86AudioNext>", spawn "playerctl next")    
+
+    , ("<XF86MonBrightnessUp>", spawn "xbacklight +5")    
+    , ("<XF86MonBrightnessDown>", spawn "xbacklight -5")    
+    ]
+
+{% endif %}
 
 --toAdd x =
 newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
@@ -174,7 +183,7 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     --WINDOWS
     , ((modWinMask, xK_w), SM.submap . M.fromList $ 
-                [ ((modWinMask, xK_w     ), windowPromptGoto defaultXPConfig { autoComplete = Just 500000 } >> withFocused (sendMessage . RestoreMinimizedWin))
+                [ ((modWinMask, xK_w     ), windowPromptGoto defaultXPConfig { autoComplete = Just 500000 })
                 , ((modWinMask, xK_i     ), windowPromptBring defaultXPConfig)
                 , ((modWinMask, xK_e), goToSelected defaultGSConfig)
                 , ((modWinMask, xK_c), withWorkspace defaultXPConfig (windows . copy))
@@ -216,9 +225,17 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
                 , ((modWinMask, xK_d    ), withFocused (sendMessage . wideWindowAlt))
                 , ((modWinMask, xK_space), sendMessage resetAlt)
                 ])
+    
+    --SPACING
+    , ((modWinMask, xK_a), SM.submap . M.fromList $ 
+                [ ((modWinMask, xK_m    ), toggleSmartSpacing)
+                , ((modWinMask, xK_s    ), toggleScreenSpacingEnabled)
+                , ((modWinMask, xK_w    ), toggleWindowSpacingEnabled)
+                ])
+
 
     , ((modm , xK_q), spawn("killall dzen2") >> restart "xmonad" True)
-    , ((modWinMask, xK_Tab), cycleRecentWS [xK_Super_L] xK_Tab xK_Left)
+    , ((modWinMask, xK_Tab), toggleWS)
     , ((modm, xK_space ), sendMessage NextLayout)
     , ((modm, xK_Tab ), BO.focusDown) -- %! Move focus to the next window
     , ((modm .|. shiftMask, xK_Tab ), BO.focusUp  ) -- %! Move focus to the previous window
@@ -253,6 +270,8 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_l     ), sendMessage Expand) -- %! Expand the master area
     {% if de is defined and de == "xfce" %}
     , ((modm .|. shiftMask, xK_q     ), spawn "xfce4-session-logout")
+    {% elif de is defined and de == "lxde" %}
+    , ((modm .|. shiftMask, xK_q     ), spawn "lxsession-logout")
     {% else %}
     , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
     {% endif %}
@@ -262,8 +281,6 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modWinMask, xK_s), SM.submap $ searchEngineMap $ S.promptSearch defaultXPConfig)
     , ((modm .|. shiftMask, xK_s), SM.submap $ searchEngineMap $ S.selectSearch)
     , ((modm, xK_p), spawn "exe=`PATH=$PATH:$HOME/bin rofi -show run -kb-row-select \"Tab\" -kb-row-tab \"\"` && eval \"exec $exe\"") -- %! Launch dmenu
-    , ((modm,               xK_m     ), withFocused minimizeWindow)
-    , ((modm .|. shiftMask, xK_m     ), sendMessage RestoreNextMinimizedWin)
     ]
     ++
     [((m .|. modWinMask, k), windows $ f i)
@@ -277,15 +294,17 @@ myManageHook2 = composeAll
     className   =? "Pidgin"             --> doF(W.shift "chat" ),
     className   =? "Kopete"             --> doF(W.shift "chat" ),
     className   =? "kopete"             --> doF(W.shift "chat" ),
+    className   =? "gajim"             --> doF(W.shift "chat" ),
     className   =? "Claws-mail"           --> doF(W.shift "mail" ),
     className   =? "claws-mail"           --> doF(W.shift "mail" ),
-    className   =? "Korganizer"           --> doF(W.shift "cal" ),
-    title   =? "Downloads"           --> doF(W.shift "downloads" ),
-    className   =? "zim"           --> doF(W.shift "cal" ),
-    --className   =? "sylpheed"           --> doF(withFocused (addTag "mail")), -- Pendiente, doF espera un Winset
+    className   =? "akregator"           --> doF(W.shift "rss" ),
+    className   =? "korganizer"           --> doF(W.shift "cal" ),
     title       =? "MPlayer"            --> doFloat,
+    className   =? "xfce4-appfinder"    --> doFloat,
+    className   =? "Xfce4-appfinder"    --> doFloat,
     className   =? "stalonetray"        --> doIgnore,
     className   =? "fbpanel"            --> doIgnore,
+    className   =? "xfce4-panel"            --> doIgnore,
     className   =? "Gkrellm2"            --> doIgnore ] 
 
 --managehook alternativo

@@ -1,0 +1,1 @@
+vim -u $HOME/.vimrc-nv -c "NV $1"

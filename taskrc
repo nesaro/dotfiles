@@ -14,8 +14,8 @@
 data.location=~/.task
 
 # Color theme (uncomment one to use)
-include /usr/share/taskwarrior/light-16.theme
-#include /usr/share/taskwarrior/light-256.theme
+#include /usr/share/taskwarrior/light-16.theme
+include /usr/share/taskwarrior/light-256.theme
 #include /usr/share/taskwarrior/dark-16.theme
 #include /usr/share/taskwarrior/dark-256.theme
 #include /usr/share/taskwarrior/dark-red-256.theme
@@ -30,3 +30,5 @@ include /usr/share/taskwarrior/light-16.theme
 #include /usr/share/taskwarrior/no-color.theme
 
 urgency.user.project.ui.coefficient=2.0
+context.wishlist=pro:wishlist
+context.freetime=pro:oss or pro:explore

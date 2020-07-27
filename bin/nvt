@@ -1,0 +1,1 @@
+vim -u $HOME/.vimrc-nv wiki/`date +%Y-%m-%d`.md
