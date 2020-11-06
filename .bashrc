@@ -122,3 +122,4 @@ fi
 
 export EDITOR=vim
 alias tasks="vim $HOME/tasks/"
+QT_QPA_PLATFORMTHEME=qt5ct
