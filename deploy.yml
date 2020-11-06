@@ -25,9 +25,6 @@
            dest: '{{ ansible_env.HOME }}/{{ item.dest }}'
            state: link
          with_items:
-           - { src: 'gitconfig', dest: '.gitconfig' }
-           - { src: 'vimrc', dest: '.vimrc' }
-           - { src: '.vimrc-nv', dest: '.vimrc-nv' }
            - { src: 'vim', dest: '.vim' }
            - { src: 'pip.conf', dest: '.pip/pip.conf' }
            - { src: '.xmobarrc', dest: '.xmobarrc' }
@@ -44,6 +41,7 @@
            - { src: 'taskrc', dest: '/.taskrc' }
            - { src: 'xsessionrc', dest: '/.xsessionrc' }
            - { src: 'lxde/desktop.conf', dest: '.config/lxsession/LXDE/desktop.conf'}
+           - { src: 'lxde/autostart', dest: '.config/lxsession/LXDE/autostart'}
 
        - template:
            src: '{{dotfiles_repo}}/{{ item.src }}'
@@ -52,4 +50,5 @@
            - { src: 'xmonad.hs', dest: '.xmonad/xmonad.hs' }
            - { src: 'xprofile', dest: '.xsession' }
            - { src: 'xprofile', dest: '.xinitrc' }
-           - { src: 'unison/infosdv.prf', dest: '.unison/infosdv.prf' }
+           - { src: 'vimrc', dest: '.vimrc' }
+           - { src: '.vimrc-nv', dest: '.vimrc-nv' }
