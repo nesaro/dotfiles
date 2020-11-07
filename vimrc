@@ -12,24 +12,24 @@ set incsearch " Busqueda incremental
 set hlsearch " dejar iluminada la busqueda
 set showmatch
 set background=dark
-
-
-if has( "gui_running" )
-    "colo PaperColor
-    colo solarized
-elseif  $TERM =~ '256'
-    colo solarized
-elseif  $TERM == 'screen'
-    set t_Co=256
-    "colo PaperColor
-    colo solarized
-elseif  $COLORTERM == 'gnome-terminal'
-    set t_Co=256
-    "colo PaperColor
-    colo solarize
-else
-    colo desert
-endif
+"
+"
+"if has( "gui_running" )
+"    "colo PaperColor
+"    colo solarized
+"elseif  $TERM =~ '256'
+"    colo solarized
+"elseif  $TERM == 'screen'
+"    set t_Co=256
+"    "colo PaperColor
+"    colo solarized
+"elseif  $COLORTERM == 'gnome-terminal'
+"    set t_Co=256
+"    "colo PaperColor
+"    colo solarized
+"else
+"    colo desert
+"endif
 
 
 " set is
