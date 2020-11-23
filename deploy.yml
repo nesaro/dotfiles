@@ -30,7 +30,6 @@
            - { src: '.xmobarrc', dest: '.xmobarrc' }
            - { src: '.bashrc', dest: '.bashrc' }
            - { src: 'redshift.conf', dest: '.config/redshift.conf' }
-           - { src: 'unison/infosdv_enc.prf', dest: '.unison/infosdv_enc.prf' }
            - { src: 'bin/ice-firefox', dest: 'bin/ice-firefox' }
            - { src: 'bin/hangouts', dest: 'bin/hangouts' }
            - { src: 'bin/git-redate', dest: 'bin/git-redate' }
