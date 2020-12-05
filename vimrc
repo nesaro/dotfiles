@@ -12,6 +12,7 @@ set incsearch " Busqueda incremental
 set hlsearch " dejar iluminada la busqueda
 set showmatch
 set background=dark
+set undofile
 "
 "
 "if has( "gui_running" )
