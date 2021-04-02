@@ -28,16 +28,15 @@ import XMonad.Layout.Tabbed
 import XMonad.Layout.Circle
 import XMonad.Layout.WindowNavigation
 import XMonad.Layout.NoBorders
-import XMonad.Layout.SimpleFloat
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.Roledex 
 import XMonad.Layout.IM
+import XMonad.Layout.SimplestFloat
 import XMonad.Layout.MosaicAlt
 import qualified XMonad.Layout.HintedGrid as HG
 import qualified XMonad.Layout.Grid as SG
 import XMonad.Layout.MagicFocus
 import XMonad.Layout.Spacing
-import XMonad.Layout.BorderResize
 import XMonad.Layout.Magnifier
 import XMonad.Layout.SimpleDecoration
 import XMonad.Layout.MouseResizableTile
@@ -112,7 +111,7 @@ main = do xmproc <- spawnPipe "xmobar /home/nesaro/.xmobarrc"
                      , logHook            = takeTopFocus >> (dynamicLogWithPP $ xmobarPP
                                                 { ppOutput = hPutStrLn xmproc
                                                 , ppTitle = xmobarColor "green" "" . shorten 50
-                                                , ppExtras = [logTag, loadAvg]
+                                                , ppExtras = [logTag]
                                                 })
                      , manageHook         = manageSpawn <+> myManageHook2 <+> myManageHook3 {% if xmonad_docks != "new" %}<+> manageDocks {% endif%}<+> manageHook defaultConfig -- El ultimo termino viene del modulo de area de paneles
                      , keys               = newKeys 
@@ -124,7 +123,7 @@ main = do xmproc <- spawnPipe "xmobar /home/nesaro/.xmobarrc"
                        tiled = Tall 1 (3%100) (1%2)
 
 
-lall = spacing 3 (MosaicAlt M.empty) ||| mouseResizableTile ||| tiled ||| noBorders Roledex ||| Mirror tiled ||| Full ||| magicFocus(noBorders Circle) ||| HG.Grid False ||| SG.Grid ||| borderResize (simpleFloat) ||| simpleTabbed ||| mySplit
+lall = spacing 3 (MosaicAlt M.empty) ||| mouseResizableTile ||| tiled ||| simplestFloat ||| noBorders Roledex ||| Mirror tiled ||| Full ||| magicFocus(noBorders Circle) ||| HG.Grid False ||| SG.Grid ||| simpleTabbed ||| mySplit
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio
@@ -149,7 +148,7 @@ ladm = spacing 3 (MosaicAlt M.empty) ||| tiled ||| Roledex ||| Mirror tiled ||| 
      delta2   = 3/100
      ratio2   = 60/100
 
-myLayout = boringWindows $ avoidStruts $ smartBorders $ spacingRaw False (Border 10 10 400 10) True (Border 10 10 10 10) True $ onWorkspace "adm" ladm lall
+myLayout = boringWindows $ avoidStruts $ smartBorders $ spacingRaw False (Border 10 10 200 100) False (Border 10 10 10 10) True $ onWorkspace "adm" ladm lall
 
 {% if xmonad_multi_keys %}
 extra_keys = [
@@ -184,7 +183,7 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     --WINDOWS
     , ((modWinMask, xK_w), SM.submap . M.fromList $ 
                 [ ((modWinMask, xK_w     ), windowPromptGoto defaultXPConfig { autoComplete = Just 500000 })
-                , ((modWinMask, xK_i     ), windowPromptBring defaultXPConfig)
+                , ((modWinMask, xK_t     ), windowPromptBring defaultXPConfig)
                 , ((modWinMask, xK_e), goToSelected defaultGSConfig)
                 , ((modWinMask, xK_c), withWorkspace defaultXPConfig (windows . copy))
                 , ((modWinMask, xK_i), withWorkspace defaultXPConfig (windows . W.shift))
@@ -193,7 +192,7 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     --WORKSPACES
     , ((modWinMask, xK_e), SM.submap . M.fromList $ 
                 [ ((modWinMask, xK_d), removeWorkspace)
-                , ((modWinMask, xK_e), selectWorkspace defaultXPConfig { autoComplete = Just 500000 })
+                , ((modWinMask, xK_e), selectWorkspace defaultXPConfig { autoComplete = Just 200000 })
                 , ((modWinMask, xK_n), selectWorkspace defaultXPConfig)
                 , ((modWinMask, xK_r), renameWorkspace defaultXPConfig)
                 ])
@@ -206,7 +205,7 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     --LAYOUTS
     , ((modWinMask, xK_p), SM.submap . M.fromList $
                 [ ((modWinMask, xK_p), layoutPrompt defaultXPConfig) --Pregunta por el layout
-                , ((modWinMask, xK_c), sendMessage $ JumpToLayout "Circle") 
+                , ((modWinMask, xK_c), sendMessage $ JumpToLayout "Spacing Circle") 
                 , ((modWinMask, xK_m), sendMessage $ JumpToLayout "Spacing 3 MosaicAlt") 
                 , ((modWinMask, xK_t), sendMessage $ JumpToLayout "Tall") 
                 , ((modWinMask .|. shiftMask, xK_t), sendMessage $ JumpToLayout "Magnifier NoMaster Tall") 
@@ -214,7 +213,7 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
                 , ((modWinMask, xK_g), sendMessage $ JumpToLayout "Grid False") 
                 , ((modWinMask, xK_b), sendMessage $ JumpToLayout "Tabbed Simplest") 
                 , ((modWinMask, xK_r), sendMessage $ JumpToLayout "Roledex") 
-                , ((modWinMask, xK_o), sendMessage $ JumpToLayout "Simple Float") 
+                , ((modWinMask, xK_o), sendMessage $ JumpToLayout "SimplestFloat") 
                 ])
 
     --MOSAICALT
@@ -252,7 +251,7 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modWinMask .|. shiftMask, xK_i), runOrRaisePrompt defaultXPConfig)
     , ((modm, xK_Return), windows W.swapMaster)
     , ((modm, xK_KP_Enter), windows W.swapMaster)
-    , ((modWinMask , xK_z), nextScreen)
+    , ((modWinMask , xK_quoteleft), nextScreen)
     , ((modm, xK_BackSpace), focusUrgent) -- Ultima ventana urgente. TODO: Pensar algo mejor para las ventanas blink, tipo añadir tag
     , ((modWinMask, xK_b), sendMessage ToggleStruts) -- Toggle area de paneles
     , ((modWinMask .|. shiftMask, xK_m), sshPrompt defaultXPConfig) -- Toggle area de paneles
@@ -300,6 +299,7 @@ myManageHook2 = composeAll
     className   =? "akregator"           --> doF(W.shift "rss" ),
     className   =? "korganizer"           --> doF(W.shift "cal" ),
     title       =? "MPlayer"            --> doFloat,
+    className   =? "Quodlibet"           --> doF(W.shift "mus" ),
     className   =? "xfce4-appfinder"    --> doFloat,
     className   =? "Xfce4-appfinder"    --> doFloat,
     className   =? "stalonetray"        --> doIgnore,
