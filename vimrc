@@ -3,6 +3,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'ag.vim/ag.vim'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
+Plug 'git://github.com/tpope/vim-abolish.git'
 call plug#end()
 
 set hidden "Permite poner en background sin guardar
