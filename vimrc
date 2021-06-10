@@ -110,3 +110,10 @@ nmap <F6> :.w !bash <CR>
 nmap <F7> :execute getline(".") <CR>
 set nomodeline
 nnoremap gb :ls<CR>:b<Space>
+
+let g:syntastic_python_checkers = ['pylint', 'mypy']
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+let b:syntastic_mode = 'passive'
+let g:syntastic_mode_map = {"mode": "passive"}
+
