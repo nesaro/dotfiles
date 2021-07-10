@@ -1,6 +1,5 @@
 call plug#begin('~/.vim/plugged')
-Plug 'vim-airline/vim-airline'
-Plug 'ag.vim/ag.vim'
+Plug 'mileszs/ack.vim'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 Plug 'git://github.com/tpope/vim-abolish.git'
@@ -107,6 +106,7 @@ function! s:RunShellCommand(cmdline)
   1
 endfunction
 
+nmap <F4> :Utl ol<cr>
 nmap <F6> :.w !bash <CR>
 nmap <F7> :execute getline(".") <CR>
 set nomodeline

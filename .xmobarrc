@@ -1,6 +1,7 @@
-Config { font = "-misc-fixed-*-*-*-*-15-*-*-*-*-*-*-*"
+Config { font = "xft:DejaVu Sans Mono-10:bold -misc-fixed-*-*-*-*-18-*-*-*-*-*-*-*"
        , bgColor = "black"
        , fgColor = "grey"
+       , allDesktops = True
        , position = TopW L 95
        , hideOnStart = False
        , lowerOnStart = False
@@ -31,5 +32,5 @@ Config { font = "-misc-fixed-*-*-*-*-15-*-*-*-*-*-*-*"
        , sepChar = "%"
        , alignSep = "}{"
        , template = "%memory% %swap% | %1% %2% %3% <fc=#ee9a00>%date%</fc> \
-                    \ %battery% | %StdinReader%"
+                    \ %battery% }{ %StdinReader%"
        }

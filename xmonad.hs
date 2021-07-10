@@ -11,6 +11,7 @@ import XMonad.Actions.TagWindows
 import XMonad.Prompt 
 import XMonad.Prompt.Ssh
 import XMonad.Prompt.RunOrRaise
+import XMonad.Prompt.FuzzyMatch
 
 --Dynamiclog
 import XMonad.Hooks.DynamicLog  -- ( PP(..), dynamicLogWithPP, dzenColor, wrap, defaultPP )
@@ -93,7 +94,9 @@ logTag :: Logger
 logTag = withWindowSet $ traverse (fmap show . getTags) . W.peek
 
 
-statusBarCmd = "dzen2 -e 'onstart=lower' -p -ta r -bg '#2e3436' -fg '#babdb6' -h 28 -w 780"
+myXPConfig = def { searchPredicate = fuzzyMatch,
+                   autoComplete = Just 500000
+                 }
 
 main = do xmproc <- spawnPipe "xmobar /home/nesaro/.xmobarrc"
 {% if xmonad_docks == "new" %}
@@ -182,7 +185,7 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     --WINDOWS
     , ((modWinMask, xK_w), SM.submap . M.fromList $ 
-                [ ((modWinMask, xK_w     ), windowPromptGoto defaultXPConfig { autoComplete = Just 500000 })
+                [ ((modWinMask, xK_w     ), windowPrompt myXPConfig Goto allWindows )
                 , ((modWinMask, xK_t     ), windowPromptBring defaultXPConfig)
                 , ((modWinMask, xK_e), goToSelected defaultGSConfig)
                 , ((modWinMask, xK_c), withWorkspace defaultXPConfig (windows . copy))
@@ -244,7 +247,7 @@ newKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     {% elif screensaver == "xscreensaver" %}
     , ((modWinMask, xK_l), spawn "xscreensaver-command --lock")
     {% endif %}
-    , ((modWinMask .|. shiftMask, xK_s), spawn "xterm -bg black -fg white")
+    , ((modWinMask .|. shiftMask, xK_s), spawn "urxvt")
     , ((modWinMask .|. shiftMask, xK_d), spawn "gnome-terminal --profile=coding")
     , ((modWinMask .|. shiftMask, xK_k), spawn "myterm")
     , ((modWinMask .|. shiftMask, xK_o), spawn "uzbl-browser")
@@ -298,12 +301,16 @@ myManageHook2 = composeAll
     className   =? "claws-mail"           --> doF(W.shift "mail" ),
     className   =? "akregator"           --> doF(W.shift "rss" ),
     className   =? "korganizer"           --> doF(W.shift "cal" ),
-    title       =? "MPlayer"            --> doFloat,
+    title   =? "Downloads"           --> doF(W.shift "downloads" ),
     className   =? "Quodlibet"           --> doF(W.shift "mus" ),
+    --title       =? "MPlayer"            --> doFloat,
     className   =? "xfce4-appfinder"    --> doFloat,
     className   =? "Xfce4-appfinder"    --> doFloat,
-    className   =? "stalonetray"        --> doIgnore,
-    className   =? "fbpanel"            --> doIgnore,
+    --className   =? "stalonetray"        --> doIgnore,
+    --className   =? "fbpanel"            --> doIgnore,
+    className   =? "xclock"            --> doFloat,
+    className   =? "XClock"            --> doIgnore,
+    --className   =? "xfdesktop"            --> doIgnore,
     className   =? "xfce4-panel"            --> doIgnore,
     className   =? "Gkrellm2"            --> doIgnore ] 
 

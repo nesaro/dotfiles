@@ -27,7 +27,6 @@
          with_items:
            - { src: 'vim', dest: '.vim' }
            - { src: 'pip.conf', dest: '.pip/pip.conf' }
-           - { src: '.xmobarrc', dest: '.xmobarrc' }
            - { src: '.bashrc', dest: '.bashrc' }
            - { src: 'redshift.conf', dest: '.config/redshift.conf' }
            - { src: 'bin/git-redate', dest: 'bin/git-redate' }
@@ -45,3 +44,4 @@
            - { src: 'xprofile', dest: '.xsession' }
            - { src: 'xprofile', dest: '.xinitrc' }
            - { src: 'vimrc', dest: '.vimrc' }
+           - { src: '.xmobarrc', dest: '.xmobarrc' }
