@@ -120,6 +120,7 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
+alias vim="nvim"
 export EDITOR=vim
 alias tasks="vim $HOME/tasks/"
 QT_QPA_PLATFORMTHEME=qt5ct
