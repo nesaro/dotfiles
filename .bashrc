@@ -120,6 +120,9 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
+if [ -d "$HOME/local/nvim/bin/" ] ; then
+    PATH="$HOME/local/nvim/bin:$PATH"
+fi
 alias vim="nvim"
 export EDITOR=vim
 alias tasks="vim $HOME/tasks/"
