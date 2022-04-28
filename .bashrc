@@ -129,3 +129,6 @@ alias tasks="vim $HOME/tasks/"
 QT_QPA_PLATFORMTHEME=qt5ct
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+alias nb="newsboat -I ~/.newsboat/read_urls.txt && newsboat"
+
